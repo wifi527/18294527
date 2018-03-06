@@ -1,0 +1,39 @@
+<!doctype html>
+<html>
+<head>
+	<title></title>
+	<meta charset="utf-8">
+	<script>
+window.onload = function() {
+
+	document.getElementById( 'formular' ).onsubmit = function( event ) {
+		event.preventDefault();
+
+		// ändere Hintergrundfarbe mit Wert, den der User eingibt
+		var farbetext;
+		farbetext = document.getElementById( 'farbetext' ).value;
+		document.getElementById( 'seite' ).style.background = farbetext;
+
+	}
+
+
+} // onload
+	</script>
+	<style>
+	#formular {
+		position:fixed; /* sticky, absolute, relative, static */
+		top:0;
+		left:0;
+		right:0;
+		background:#fff;
+		padding:10px;
+	}
+	</style>
+</head>
+<body id="seite">
+	<form id="formular">
+		<input type="text" id="farbetext">
+		<button>Ändere Farbe</button>
+	</form>
+</body>
+</html>

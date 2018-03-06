@@ -1,0 +1,44 @@
+<!doctype html>
+<html>
+<head>
+	<title></title>
+	<meta charset="utf-8">
+	<script src="wifi.funktionen.js"></script>
+	<script>
+
+window.onload = function() {
+	var zufall, versuche;
+	versuche = 0;
+	zufall = zufallsZahl();
+	el( 'btn' ).onclick = function( event ) {
+		event.preventDefault();
+
+		var userZahl;
+		userZahl = el( 'z' ).value * 1;
+		if ( userZahl >= 1 && userZahl <= 10 ) {
+			// OK
+			versuche = versuche + 1; // versuche++;
+			if ( userZahl == zufall ) {
+				el( 'ausgabe' ).innerHTML = '<b>Gewonnen.</b><br>Versuche: '+versuche;
+			} else {
+				if ( userZahl > zufall ) {
+					el( 'ausgabe' ).innerHTML = 'Deine Zahl ist größer.';
+				} else {
+					el( 'ausgabe' ).innerHTML = 'Deine Zahl ist kleiner.';
+				}
+			}
+		} else {
+			el( 'ausgabe' ).innerHTML = 'nur 1-10 eingeben';
+		}
+	}
+}
+	</script>
+	<style>
+	* { font-size:30px; }
+	</style>
+</head>
+<body>
+<input type="text" id="z"><button id="btn">OK</button>
+<div id="ausgabe"></div>
+</body>
+</html>

@@ -1,0 +1,27 @@
+Bewertung Übungen für Praxis-Nachweis Diplomprüfung
+
+Punkte pro Aufgabe
+ 0  nicht abgegeben
+ 1  abgegeben, funktioniert nicht, Code Umfang nicht vorhanden
+ 2  abgegeben, funktioniert nicht
+ 3  Aufgabe teilweise gelöst, enthält Bugs
+ 4  Aufgabe teilweise gelöst
+ 5  Aufgabe gelöst, Bugs im UI oder Funktionalität
+ 6  Aufgabe gelöst, kleine Bugs, UI nur Standard HTML
+ 7  Aufgabe gelöst
++1  Zusatzaufgabe gelöst
++2  zeitgerechte Abgabe
+
+Gesamt
+Übung 1   Modul1(Basis)   JS Basics, Variablen, Conditional, Funktionen
+Übung 2   Modul1(Basis)   Funktionen, Schleifen, Objekte, Array, DOM
+Übung 3   Modul2(Aufbau)  jQuery, jQuery Plugin
+Übung 4   Modul2(Aufbau)  OOP
+Übung 5   Modul2(Aufbau)  XHR, AJAX
+Übung 6   Modul3(Appl.)   NodeJS (od. anderes Thema aus dem letzten Modul)
+(ggf. Übung 5 + 6 als kombinierte Aufgabe mit zwei Teilen)
+
+mögliche Gesamtpunkte: 60
+bestanden >= 30
+gut       >= 45
+sehr gut  >= 52

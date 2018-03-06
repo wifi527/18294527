@@ -1,0 +1,36 @@
+<!doctype html>
+<html>
+<head>
+	<title></title>
+	<meta charset="utf-8">
+	<script src="wifi.funktionen.js"></script>
+	<script>
+window.onload = function() {
+	el('kurs').onchange = function() {
+		var betragVon, kurs, betragNach;
+
+		betragVon = el('eingabe').value * 1;
+		kurs = el( 'kurs' ).value * 1;
+
+		betragNach = runden( betragVon * kurs, 2);
+		el( 'ausgabe' ).value = betragNach;
+
+	}
+} // onload
+	</script>
+	<style>
+	</style>
+</head>
+<body>
+<h1>Währungsrechner</h1>
+<form>
+	<input type="text" id="eingabe">
+	<select id="kurs">
+		<option value="">bitte auswählen...</option>
+		<option value="1.23">EUR &gt; USD</option>
+		<option value="0.81">USD &gt; EUR</option>
+	</select>
+	<input type="text" id="ausgabe" readonly>
+</form>
+</body>
+</html>

@@ -1,0 +1,52 @@
+<!doctype html>
+<html>
+<head>
+	<title></title>
+	<meta charset="utf-8">
+	<script src="wifi.funktionen.js"></script>
+	<script>
+window.onload = function() {
+
+	var ausgabe,i,j,z=0;
+
+	ausgabe = '<table border="1">';
+	for ( j=1; j<=4; j++ ) {
+		ausgabe += '<tr>';
+		for( i=1; i<=5; i++ ) {
+			z++;
+			ausgabe += '<td>' + z + '</td>';
+		}
+		ausgabe += '</tr>';
+	}
+	ausgabe += '</table>';
+
+	console.log( ausgabe );
+
+	el( 'ausgabe' ).innerHTML = ausgabe;
+
+
+} // onload
+	</script>
+	<style>
+td {
+		width:50px;
+		height:50px;
+		text-align:center;
+		font-size:30px;
+	}
+	</style>
+</head>
+<body>
+
+Ziel: Tabelle mit 5 Spalten und 4 Zeilen (zeigt Zahlen 1-20)
+<div id="ausgabe"></div>
+<!--
+<table border="1">
+	<tr>
+		<td>...</td>
+	</tr>
+	<tr></tr>
+</table>
+-->
+</body>
+</html>

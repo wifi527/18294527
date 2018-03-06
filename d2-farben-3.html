@@ -1,0 +1,63 @@
+<!doctype html>
+<html>
+<head>
+	<title></title>
+	<meta charset="utf-8">
+	<script>
+
+var aendereHGFarbe = function() {
+
+	var r, g, b, farbetext;
+	r = document.getElementById( 'farbeR' ).value;
+	g = document.getElementById( 'farbeG' ).value;
+	b = document.getElementById( 'farbeB' ).value;
+	farbetext = 'rgb(' + r + ',' + g + ',' + b + ')';
+	document.getElementById( 'seite' ).style.background = farbetext;
+
+} // aenderHGFarbe
+
+
+
+window.onload = function() {
+
+	document.getElementById( 'farbeR' ).onchange = function( event ) {
+		event.preventDefault();
+		aendereHGFarbe(); // Funktionsaufruf
+	}
+
+	document.getElementById( 'farbeG' ).onchange = function( event ) {
+		event.preventDefault();
+		aendereHGFarbe(); // Funktionsaufruf
+	}
+
+	document.getElementById( 'farbeB' ).onchange = function( event ) {
+		event.preventDefault();
+		aendereHGFarbe(); // Funktionsaufruf
+	}
+
+
+
+} // onload
+	</script>
+	<style>
+	#formular {
+		position:fixed; /* sticky, absolute, relative, static */
+		top:0;
+		left:0;
+		right:0;
+		background:#fff;
+		padding:10px;
+	}
+	input {
+		width:50px;
+	}
+	</style>
+</head>
+<body id="seite">
+	<form id="formular">
+		<input type="range" min="0" max="255" id="farbeR">
+		<input type="range" min="0" max="255" id="farbeG">
+		<input type="range" min="0" max="255" id="farbeB">		
+	</form>
+</body>
+</html>

@@ -1,0 +1,12 @@
+Übung 1) Abgabe bis 13.3.2018
+Berechne den Body-Mass-Index (BMI)
+Eingabe Größe in cm
+Eingabe Gewicht in kg (Kommazahlen erlauben)
+BMI = kg / m²
+Ausgabe des Wertes als Text (gerundet auf 3 Kommastellen)
+Ausgabe in Grafik als X (bmi_tabelle.gif)
+Anm.: Umsetzung ohne (!) Verwendung von Frameworks (wie zB jQuery)
+
+Übung 1, Zusatzaufgabe)
+Textausgabe Interpretation, Kategorie wie "starkes Untergewicht" usw. laut
+Tabelle https://de.wikipedia.org/wiki/Body-Mass-Index

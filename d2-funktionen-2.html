@@ -1,0 +1,43 @@
+<!doctype html>
+<html>
+<head>
+	<title></title>
+	<meta charset="utf-8">
+	<script src="wifi.funktionen.js"></script>
+	<script>
+
+
+window.onload = function() {
+	el( 'formular' ).onsubmit = function(event) {
+		event.preventDefault();
+		var kreisumfang, radius, anzahlstellen;
+		radius = el( 'eingabe' ).value * 1;
+		anzahlstellen =  el( 'stellen' ).value * 1;
+		kreisumfang = umfang( radius );
+		kreisumfang = runden( kreisumfang, anzahlstellen );
+		el( 'ausgabe' ).innerHTML = kreisumfang;
+	}
+}
+
+
+/*
+	Math.floor() => abrunden
+	Math.ceil()	=> aufrunden
+	Math.round() => kaufm. runden
+*/
+
+
+	</script>
+	<style>
+	</style>
+</head>
+<body>
+<form id="formular">
+	Radius: <input type="text" id="eingabe"><br>
+	Stellen: <input type="text" id="stellen"><br>
+
+	<button>Umfang</button>
+</form>
+<div id="ausgabe"></div>
+</body>
+</html>

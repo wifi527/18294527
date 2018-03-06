@@ -1,0 +1,37 @@
+<!doctype html>
+<html>
+<head>
+	<title></title>
+	<meta charset="utf-8">
+	<script src="wifi.funktionen.js"></script>
+	<script>
+window.onload = function() {
+
+	var i = 0;
+
+	while ( i<=10 ) {
+		i++;
+	//for ( i=1; i<=10; i++ ) {
+
+		// wann ist eine Zahl gerade ?
+		// wenn zahl durch 2 keinen rest hat
+		if ( i % 2 == 0 ) {
+			el( 'ausgabe' ).innerHTML += '<div class="even">' + i + '</div>';
+		} else {
+			el( 'ausgabe' ).innerHTML += '<div>' + i + '</div>';
+		}
+
+
+	}
+
+
+}
+	</script>
+	<style>
+.even { color:red; }
+	</style>
+</head>
+<body>
+<div id="ausgabe"></div>
+</body>
+</html>

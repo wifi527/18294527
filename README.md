@@ -15,7 +15,21 @@
   *	document.getElementById
   *	HTMLNode.innerHTML
   *	HTMLNode.style
+  * HTMLNode.value
 
 Beispiele/Übungen
 - Zahlen addieren
 - Alter/Geschlecht
+
+
+
+
+### TAG 2 (6.3.2018, C513)
+-	JS Sprachkern
+  * Funktionen
+  * Event-Listener ELEMENT.onfocus, ELEMENT.onchange
+
+Beispiele/Übungen
+- Farben
+- Zahlrate Spiel
+- Währungsrechner einfach
