@@ -1,0 +1,71 @@
+<!doctype html>
+<html>
+<head>
+	<title>Alter und Geschlecht</title>
+	<meta charset="utf-8">
+	<script>
+
+		window.onload = function() {
+
+			document.getElementById( 'btn' ).onclick = function( event ) {
+				event.preventDefault();
+		  	// 1. Deklaration
+		  	var alter, geschlecht, altersGruppe1, altersGruppe2, geschlM, geschlW, ausgabe;
+
+		  	// 2. Einlesen, Initialisieren
+		  	alter = document.getElementById( 'feldAlter' ).value * 1;
+		  	geschlecht = document.getElementById( 'feldGeschlecht' ).value;
+
+		  	// 3. Verarbeitung
+		  	altersGruppe1 = alter >= 2 && alter <= 18;
+		  	altersGruppe2 = alter > 18 && alter <= 120;
+		    geschlM = geschlecht == 'm';
+		  	geschlW = geschlecht == 'w';
+
+		  	document.getElementById( 'feldGeschlecht' ).style.background = '';
+		  	document.getElementById( 'feldAlter' ).style.background = '';
+
+		  	if ( ( !altersGruppe1 && !altersGruppe2 ) || ( !geschlM && !geschlW ) )  {
+		  		// Fehler
+		  		ausgabe = 'Es ist was falsch!';
+		  		if ( !geschlM && !geschlW ) {
+		  			document.getElementById( 'feldGeschlecht' ).style.backgroundColor = 'red';
+		  		}
+		  		if ( !altersGruppe1 && !altersGruppe2) {
+		  			document.getElementById( 'feldAlter' ).style.background = 'red';
+		  		}
+		  	} else {
+		  		// alles OK
+		  		if ( altersGruppe1 && geschlW ) { ausgabe = 'Mädchen'; }
+		  		else if ( altersGruppe1 ) { ausgabe = 'Bub'; }
+		  		else if ( geschlW ) { ausgabe = 'Frau'; }
+		  		else { ausgabe = 'Mann'; }
+		  	}
+
+		  	// 4. Ausgabe, Rückgabewert
+		  	document.getElementById( 'ausgabe' ).innerHTML = ausgabe;
+		  };
+		}
+
+
+	</script>
+	<style>
+	body, input, button { font-size:20px; font-family:Verdana; }
+	#ausgabe {
+		padding:20px;
+		font-weight:bold;
+		display:inline-block;
+		background:#000;
+		color:#fff;
+	}
+	</style>
+</head>
+<body>
+	<form action="?">
+		Alter[2-120]: <input type="text" id="feldAlter" autocomplete="off"><br>
+		Geschlecht[m,w]: <input type="text" id="feldGeschlecht" autocomplete="off"><br>
+		<button id="btn">Ausgabe</button>
+	</form>
+	<div id="ausgabe"></div>
+</body>
+</html>

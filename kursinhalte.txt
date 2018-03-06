@@ -1,0 +1,24 @@
+Modul 1: Basis
+- Grundlagen Programmierung
+  (Variablen,bedingte Codeblöcke,Schleifen,Funktionen,Array,Objekte)
+- DOM Manipulation
+- HTML/CSS/JS
+- jQuery
+
+Modul2: Aufbau
+- Funktionen vertiefend
+- jQuery Plugin
+- XHR/AJAX/JSON
+- OOP, Prototype-Chaining
+- SVG
+
+Modul3: Applikationen
+- TDD
+- ES6
+- GMAP, Geoloc
+- Canvas
+- Audio/Video
+- NodeJS
+- Websockets
+- MVC
+- Cordova.js

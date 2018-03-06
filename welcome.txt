@@ -2,4 +2,24 @@
 Willkommen bei Programmieren mit Javascript - Basis!
 Willkommen im Diplom-Lehrgang Web Developer - Javascript!
 
-- 
+
+Windows-Login
+Benutzer: Nachname + 1-Buchstabe Vorname
+Passwort: wifiwien (oder bereits geändert)
+
+
+Kursinhalte/Ziele
+- Datenbankzugriff
+- interaktive Applikationen
+- Fehlertesten, Debuggen
+- Schnittstelle
+- HTML/CSS verändern
+- Formulare verifizieren
+- Spiele (Browser)
+- Anwendungen (Destop-Applikationen) steuern
+- Ladevorgang Seite steuern (Performance)
+- mobile Webapps
+- Daten Visualisierung
+- Sachen berechnen
+- Cookies (Daten speichern)
+- serverseitiges Javascript (NodeJS)

@@ -1,0 +1,64 @@
+<!doctype html>
+<html>
+<head>
+	<title>Addiere zwei Zahlen</title>
+	<meta charset="utf-8">
+	<script>
+window.onload = function() {
+
+	document.getElementById( 'btn' ).onclick = function( event ) {
+		event.preventDefault(); // verhindert abschicken vom Formular
+
+		// 1.Variablen
+		var eingabe1, eingabe2, ausgabe;
+
+		// 2. Eingabe/Einlesen
+		document.getElementById( 'z1' ).style.background = '';
+		document.getElementById( 'z2' ).style.background = '';
+		eingabe1 = document.getElementById( 'z1' ).value * 1; // 1
+		eingabe2 = document.getElementById( 'z2' ).value * 1; // 2
+
+		// 3. Verarbeiten/Berechnen
+		ausgabe = eingabe1 + eingabe2; // '1' + '2' => '12'
+		// 4. Ausgabe
+
+		if ( ausgabe >= 0 || ausgabe < 0 ) {
+			//JA
+			ausgabe = 'Die Summe ist <b>'+ausgabe+'</b>!';
+			document.getElementById( 'ausgabe' ).innerHTML = ausgabe;
+		} else {
+      //NEIN
+			document.getElementById( 'ausgabe' ).innerHTML = 'Bitte nur Zahlen eingeben!';
+			if ( !(eingabe1 > 0 ) ) {
+				document.getElementById( 'z1' ).style.background = 'red';
+			}
+			if ( !(eingabe2 > 0 ) ) {
+				document.getElementById( 'z2' ).style.background = 'red';
+			}
+		}
+
+	} // onclick #btn
+
+} // onload
+
+
+
+
+
+
+
+	</script>
+	<style>
+b { color:red; }
+	</style>
+</head>
+<body>
+<h1>Addieren</h1>
+<form>
+	<input type="text" id="z1" autocomplete="off"><br>
+	<input type="text" id="z2" autocomplete="off"><br>
+  <button id="btn">Summe</button>
+</form>
+<div id="ausgabe"></div>
+</body>
+</html>
