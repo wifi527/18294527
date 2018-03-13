@@ -1,0 +1,11 @@
+Übung 2) Abgabe bis 20.3.2018
+Vokabel Memory
+Vorlage-Datei: ueb2-memory.html
+
+Ziel Memory (CSS vorbereitet, Klassen verwenden) mit Vokabel Deutsch/English (Array im Code).
+User kann zwei Karten anklicken, werden "umgedreht", danach verglichen, bei Treffer "done", falls nicht gleich
+wieder verdecken und Benutzer hat wieder Möglichkeit zwei Karten aufzudecken.
+Karten werden durchgemischt.
+
+Zusatzaufgabe:
+Anzeige der benötigten Klicks oder Limit von 50 Klicks und runterzählen.

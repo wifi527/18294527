@@ -1,0 +1,39 @@
+<!doctype html>
+<html>
+<head>
+	<title></title>
+	<meta charset="utf-8">
+	<script>
+window.onload = function() {
+	var div, body; // HTMLNodeElemente
+	div = document.createElement( 'div' );
+	div.innerHTML = 'Hallo <b>Welt</b>';
+	div.id = 'ausgabe';
+	//div.className = 'absatz';
+	div.setAttribute( 'class', 'absatz' );
+
+	div.onclick = function() {
+		//div.style.display = 'none';
+		body.removeChild( div );
+	}
+
+	//body = document.getElementById( 'meinbody' );
+	body = document.getElementsByTagName( 'body' )[0];
+
+	body.appendChild( div );
+
+
+} // onload
+	</script>
+	<style>
+.absatz {
+	padding:20px;
+	color:brown;
+}
+
+	</style>
+</head>
+<body id="meinbody">
+	<div id="box">Das ist ein normaler DIV</div>
+</body>
+</html>

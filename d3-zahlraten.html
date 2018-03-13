@@ -8,8 +8,8 @@
 
 window.onload = function() {
 	var zufall, versuche;
-	versuche = 0;
 	zufall = zufallsZahl();
+	versuche = 0;
 	el( 'btn' ).onclick = function( event ) {
 		event.preventDefault();
 
@@ -20,6 +20,9 @@ window.onload = function() {
 			versuche = versuche + 1; // versuche++;
 			if ( userZahl == zufall ) {
 				el( 'ausgabe' ).innerHTML = '<b>Gewonnen.</b><br>Versuche: '+versuche;
+				// neues Spiel...
+				zufall = zufallsZahl();
+				versuche = 0;
 			} else {
 				if ( userZahl > zufall ) {
 					el( 'ausgabe' ).innerHTML = 'Deine Zahl ist größer.';

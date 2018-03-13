@@ -1,0 +1,59 @@
+<!doctype html>
+<html>
+<head>
+	<title>Lotto 6 aus 45</title>
+	<meta charset="utf-8">
+	<script src="wifi.funktionen.js"></script>
+	<script>
+window.onload = function() {
+
+var meineTabelle, zeile, zelle, i;
+
+var gamer = -1;
+
+meineTabelle = document.createElement( 'table' );
+meineTabelle.setAttribute( 'border', '1');
+el( 'ausgabe' ).appendChild( meineTabelle );
+
+for ( i=1; i<=12; i++ ) {
+	if ( i%4 == 1 ) {
+		zeile = document.createElement( 'tr' );
+		meineTabelle.appendChild( zeile );
+	}
+	zelle = document.createElement( 'td' );
+	zeile.appendChild( zelle );
+	zelle.onclick = function() {
+		gamer *= -1;
+		if ( this.innerHTML == '' ) {
+			this.innerHTML = gamer;
+			this.className = 'a'+gamer;
+
+
+
+
+		} else if ( this.innerHTML == gamer ) {
+			this.innerHTML = this.className = '';
+		} else {
+			gamer *= -1;
+		}
+	}
+}
+} // onload
+	</script>
+	<style>
+td {
+		width:50px;
+		height:50px;
+		text-align:center;
+		font-size:20px;
+	}
+
+.a1 {background:green; }
+.a-1 {background:red;}
+
+	</style>
+</head>
+<body>
+<div id="ausgabe"></div>
+</body>
+</html>

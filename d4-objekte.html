@@ -1,0 +1,46 @@
+<!doctype html>
+<html>
+<head>
+	<title></title>
+	<meta charset="utf-8">
+	<script>
+var fahrrad = {}; //new Object();
+fahrrad.farbe = 'red';
+fahrrad.preis = 5000;
+fahrrad.fahren = function() {
+}
+
+
+var bike = [];
+bike[0] = 'red';
+bike[1] = 5000;
+
+var f_farbe = 'red';
+var f_preis = 5000;
+
+var div = document.createElement( 'div' );
+// div = Object
+//div.setAttribute(...)
+div.id = 'x';
+
+var fahrrad = {
+	farbe: 'red',
+	preis: 5000
+}
+
+// assoziativer Array === Objekt
+var bike = [];
+bike[ 'farbe' ] = 'red';
+bike[ 'preis' ] = 5000;
+
+console.log( fahrrad.farbe, bike['farbe'] );
+console.log( fahrrad['farbe'], bike.farbe );
+
+
+	</script>
+	<style>
+	</style>
+</head>
+<body>
+</body>
+</html>

@@ -1,0 +1,115 @@
+<!doctype html>
+<html>
+<head>
+	<title>Lotto 6 aus 45</title>
+	<meta charset="utf-8">
+	<script src="wifi.funktionen.js"></script>
+	<script>
+var geklickt = 0;
+var zahlAnklicken = function() {
+
+			//console.log( 'geklickt gleich am Anfang', geklickt );
+			//console.log( this.className );
+			// this => das Objekt auf welches geklickt wurde, Event ausgelöst wurde
+			// this == zelle
+			if ( this.className == '' ) {
+
+				if (  geklickt < 6 ) {
+					this.className = 'aktiv';
+					geklickt++;
+					//console.log( geklickt );
+				} // if
+			} else {
+				this.className = '';
+				geklickt--;
+			}
+
+			if ( geklickt == 6 ) {
+				el( 'start' ).style.opacity = 1;
+			} else {
+				el( 'start' ).style.opacity = 0;
+			}
+
+
+} // zahlAnklicken ENDE
+
+
+var erzeugeTabelle = function() {
+	var tabelle, body, zeile, zelle, i;
+
+	body = document.getElementsByTagName( 'body' )[0]; // body existiert bereits im DOM
+
+	// Tabelle
+	tabelle = document.createElement( 'table' );
+	tabelle.setAttribute( 'border', 1);
+	body.appendChild( tabelle );
+
+	for ( i=1; i<=45; i++) {
+
+		if ( i%6 == 1 ) {
+			// Zeile
+			zeile = document.createElement( 'tr' );
+			tabelle.appendChild( zeile );
+		}
+
+		// Zelle
+		zelle = document.createElement( 'td' );
+		zelle.innerHTML = i;
+
+		zelle.onclick = zahlAnklicken;
+
+		zeile.appendChild( zelle );
+	} // for
+
+
+
+} // erzeuge Tabelle
+
+
+window.onload = function() {
+
+	erzeugeTabelle();
+
+
+	el( 'start' ).onclick = function() {
+		if ( geklickt == 6 ) {
+			console.log( 'Ziehung los' );
+		}
+	}
+
+
+} // onload
+	</script>
+	<style>
+td {
+		width:50px;
+		height:50px;
+		text-align:center;
+		font-size:20px;
+		cursor:pointer;
+		transition:background 0.3s;
+		-webkit-user-select: none;
+		-ms-user-select: none;
+		-moz-user-select: none;
+ 		user-select: none;
+	}
+
+	.aktiv {
+		background:green;
+		color:#fff;
+	}
+
+	#start {
+		/*display:none;*/
+		/*visibility:hidden;*/
+		opacity:0;
+	}
+
+	</style>
+</head>
+<body>
+
+	<button id="start">Ziehung starten</button>
+
+</body>
+</html>

@@ -1,0 +1,63 @@
+<!doctype html>
+<html>
+<head>
+	<title></title>
+	<meta charset="utf-8">
+	<script src="wifi.funktionen.js"></script>
+	<script>
+window.onload = function() {
+		el( 'tab1' ).onclick = function() {
+			el( 'tab1' ).className = 'aktiv';
+			el( 'tab2' ).className = '';
+			el( 'tab3' ).className = '';
+			el( 'page1' ).className = 'aktiv';
+			el( 'page2' ).className = '';
+			el( 'page3' ).className = '';
+		}
+		el( 'tab2' ).onclick = function() {
+			el( 'tab1' ).className = '';
+			el( 'tab2' ).className = 'aktiv';
+			el( 'tab3' ).className = '';
+			el( 'page1' ).className = '';
+			el( 'page2' ).className = 'aktiv';
+			el( 'page3' ).className = '';
+		}
+		el( 'tab3' ).onclick = function() {
+			el( 'tab1' ).className = '';
+			el( 'tab2' ).className = '';
+			el( 'tab3' ).className = 'aktiv';
+			el( 'page1' ).className = '';
+			el( 'page2' ).className = '';
+			el( 'page3' ).className = 'aktiv';
+		}
+}
+	</script>
+	<link rel="stylesheet" href="d4-datenverwaltung.css">
+</head>
+<body>
+
+	<nav>
+		<ul>
+			<li id="tab1" class="aktiv" ><a href="#">Home</a></li>
+			<li id="tab2"><a href="#">Eingabe</a></li>
+			<li id="tab3"><a href="#">Ausgabe</a></li>
+		</ul>
+	</nav>
+
+	<section class="aktiv" id="page1">
+		<h1>Datenverwaltung</h1>
+		<p>WIFI Javascript ...</p>
+
+	</section>
+
+	<section id="page2">
+		<h1>Eingabe</h1>
+	</section>
+
+	<section id="page3">
+		<h1>Ausgabe</h1>
+	</section>
+
+
+</body>
+</html>

@@ -1,0 +1,68 @@
+<!doctype html>
+<html>
+<head>
+	<title></title>
+	<meta charset="utf-8">
+	<script>
+
+	</script>
+	<style>
+
+* { margin:0; font-size:20px; }
+h1 { font-size:40px; }
+.einleitung { font-size:30px; }
+
+p.rot { color:#FF6666; border:1px solid red; }
+.rot { color:red; }
+
+[type="password"] { background:red; }
+:focus {
+	background:black;
+	color:#fff;
+}
+
+
+
+body { color:#333; }
+
+@media print {
+	body { color:#FF0 !important; }
+}
+
+@media all and (max-width:500px ) {
+	.meinbody { color:blue;}
+}
+
+
+#block { padding:50px; margin:10px; border:1px dotted #000; }
+
+#block div p { font-family:Arial; }
+div#block p { color:green; }
+
+#highlight { color:pink; font-size:2em; }
+
+#block * p { background:#ccc; }
+
+	</style>
+</head>
+<body class="meinbody">
+<h1>Willkommen</h1>
+<p class="einleitung rot">Hallo <i>Welt</i></p>
+<p class="rot">Hallo Welt</p>
+
+<div id="block">
+	<div>
+		<p class="rot">Das ist ein Text 1</p>
+		<p id="highlight" style="color:#fff;">Das ist ein Text 2</p>
+	</div>
+	<p class="rot">Das ist ein Text 3</p>
+</div>
+
+
+<form method="get" action="?">
+	<input type="text" id="eingabe">
+	<input type="password">
+	<button class="rot">Klick mich</button>
+</form>
+</body>
+</html>

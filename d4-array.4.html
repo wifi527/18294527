@@ -1,0 +1,68 @@
+<!doctype html>
+<html>
+<head>
+	<title></title>
+	<meta charset="utf-8">
+	<script>
+var number = 1;
+var string = 'abc';
+var bool = true;
+var func = function() {};
+var arr = new Array();
+var obj = new Object();
+
+arr[ 0 ] = 1;
+arr[ 1 ] = 'a';
+arr[ 2 ] = true;
+arr[ 3 ] = new Array();
+arr[ 4] = new Object();
+
+arr[ 3 ][ 0 ] = 1;
+
+
+var zahlen = []; // = new Array();
+zahlen[0] = 5;
+zahlen.push( 10 );
+zahlen[2] = 45;
+zahlen.push( 20 );
+zahlen.push( 13 );
+zahlen.push( 8 );
+
+console.log( zahlen[1] );
+console.log( zahlen );
+
+// ? letzer Wert ?
+var positionLetzter = zahlen.length - 1;
+var wertLetzter = zahlen[ positionLetzter ];
+
+console.log( 'letzter', wertLetzter );
+
+console.log( zahlen[ zahlen.length - 1 ] );
+
+window.onload = function() {
+
+	var i, ausgabe = '', max = zahlen[0], div;
+	for ( i=1; i<zahlen.length; i++ ) {
+		if ( zahlen[i] > max ) {
+			max = zahlen[i];
+		}
+	}
+
+	for ( i=0; i<zahlen.length; i++ ) { // !!!!!!!!!!!!!!!!!!!!!!!
+		div = document.createElement( 'div' );
+		div.style.color = zahlen[i] == max ? 'red' : '';
+		div.innerHTML = zahlen[i];
+		document.getElementById( 'ausgabe' ).appendChild( div );
+	}
+
+
+} // onload
+	</script>
+	<style>
+body { font-size:30px; }
+	</style>
+</head>
+<body>
+<div id="ausgabe"></div>
+</body>
+</html>

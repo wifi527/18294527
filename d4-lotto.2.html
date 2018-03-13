@@ -1,0 +1,136 @@
+<!doctype html>
+<html>
+<head>
+	<title>Lotto 6 aus 45</title>
+	<meta charset="utf-8">
+	<script src="wifi.funktionen.js"></script>
+	<script>
+window.onload = function() {
+
+	// Erzeuge Tabelle mit 6 Spalten, mit Zahlen 1-45
+	var tabelle, body, zeile, zelle, i, geklickt = 0;
+
+	body = document.getElementsByTagName( 'body' )[0]; // body existiert bereits im DOM
+
+	// Tabelle
+	tabelle = document.createElement( 'table' );
+	tabelle.setAttribute( 'border', 1);
+	body.appendChild( tabelle );
+
+	for ( i=1; i<=45; i++) {
+
+		if ( i%6 == 1 ) {
+			// Zeile
+			zeile = document.createElement( 'tr' );
+			tabelle.appendChild( zeile );
+		}
+
+		// Zelle
+		zelle = document.createElement( 'td' );
+		zelle.innerHTML = i;
+		zelle.onclick = function() {
+
+			//console.log( 'geklickt gleich am Anfang', geklickt );
+			//console.log( this.className );
+			// this => das Objekt auf welches geklickt wurde, Event ausgelöst wurde
+			// this == zelle
+			if ( this.className == '' ) {
+
+				if (  geklickt < 6 ) {
+					this.className = 'aktiv';
+					geklickt++;
+					//console.log( geklickt );
+				} // if
+			} else {
+				this.className = '';
+				geklickt--;
+			}
+
+			/*if ( geklickt == 6 ) {
+				el( 'start' ).style.opacity = 1;
+			} else {
+				el( 'start' ).style.opacity = 0;
+			}*/
+
+			// ternärer Operator
+			el( 'start' ).style.opacity = (geklickt == 6) ? 1 : 0;
+
+
+		} // onclick zelle
+
+		zeile.appendChild( zelle );
+	} // for
+
+
+	el( 'start' ).onclick = function() {
+		var zahlen = [], i, zufall;
+		if ( geklickt == 6 ) {
+			console.log( 'Ziehung los' );
+			for ( i=1; i<=6; i++ ) {
+				zufall = Math.floor( Math.random() * 45 ) + 1;
+
+				if ( zahlen.indexOf( zufall ) > -1 ) { // zahl gibt es schon
+					i--;
+					continue; // gleich nächsten Durchlauf machen
+				}
+
+				zahlen.push( zufall );
+				document.getElementsByTagName( 'td' )[ zufall-1 ].className += ' gezogen';
+
+
+
+			} // for
+			console.log( zahlen );
+
+
+
+		} // if
+	} // onclick
+
+
+} // onload
+	</script>
+	<style>
+td {
+		width:50px;
+		height:50px;
+		text-align:center;
+		font-size:20px;
+		cursor:pointer;
+		transition:background 0.3s;
+		-webkit-user-select: none;
+		-ms-user-select: none;
+		-moz-user-select: none;
+ 		user-select: none;
+	}
+
+	.aktiv {
+		background:green;
+		color:#fff;
+	}
+
+	.gezogen {
+		background:#aaa;
+		color:red;
+	}
+
+	.aktiv.gezogen {
+		background:red;
+		color:yellow;
+		font-size:30px;
+	}
+
+	#start {
+		/*display:none;*/
+		/*visibility:hidden;*/
+		opacity:0;
+	}
+
+	</style>
+</head>
+<body>
+
+	<button id="start">Ziehung starten</button>
+
+</body>
+</html>

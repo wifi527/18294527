@@ -1,0 +1,145 @@
+<!doctype html>
+<html>
+<head>
+	<title></title>
+	<meta charset="utf-8">
+	<script src="wifi.funktionen.js"></script>
+	<script>
+var blendeAlleAus = function() {
+		el( 'inhalt1' ).className = '';
+		el( 'inhalt2' ).className = '';
+		el( 'inhalt3' ).className = '';
+		el( 'tab1' ).className = '';
+		el( 'tab2' ).className = '';
+		el( 'tab3' ).className = '';
+}
+
+var allePersonen = [];
+
+var machTabelle = function() {
+	var tabelle, zeile, zelle, i;
+	tabelle = document.createElement( 'table' );
+	tabelle.setAttribute( 'border', 1 );
+
+	for ( i = 0; i<allePersonen.length; i++ ) {
+		zeile = document.createElement( 'tr' );
+		tabelle.appendChild( zeile );
+
+		zelle = document.createElement( 'td' );
+		zelle.innerHTML = allePersonen[i].vorname;
+		zeile.appendChild( zelle );
+		zelle = document.createElement( 'td' );
+		zelle.innerHTML = allePersonen[i].nachname;
+		zeile.appendChild( zelle );
+		zelle = document.createElement( 'td' );
+		zelle.innerHTML = allePersonen[i].email;
+		zeile.appendChild( zelle );
+	}
+
+	el( 'inhalt3' ).appendChild( tabelle );
+
+}
+
+
+window.onload = function() {
+	// zeige Home beim Laden der Seite
+	el( 'tab1' ).className = 'aktiv';
+	el( 'inhalt1' ).className = 'aktiv';
+
+	// -----------------------------------------------
+	el( 'tab1' ).onclick = function( event ) {
+		event.preventDefault();
+		//el( 'inhalt1' ).style.display = 'block';
+		blendeAlleAus();
+		el( 'tab1' ).className = 'aktiv';
+		el( 'inhalt1' ).className = 'aktiv';
+
+	}
+	// -----------------------------------------------
+
+	el( 'tab2' ).onclick = function( event ) {
+		event.preventDefault();
+		blendeAlleAus();
+		el( 'tab2' ).className = 'aktiv';
+		el( 'inhalt2' ).className = 'aktiv';
+	}
+	// -----------------------------------------------
+
+	el( 'tab3' ).onclick = function( event ) {
+		event.preventDefault();
+		blendeAlleAus();
+		el( 'tab3' ).className = 'aktiv';
+		el( 'inhalt3' ).className = 'aktiv';
+		machTabelle();
+	}
+	// -----------------------------------------------
+
+	el( 'btn_speichern' ).onclick = function( event ) {
+		event.preventDefault();
+
+		var person = {};
+		person.vorname = el( 'vorname' ).value;
+		person.nachname = el( 'nachname' ).value;
+		person.email = el( 'email' ).value;
+
+		allePersonen.push( person );
+
+		el( 'vorname' ).value = '';
+		el( 'nachname' ).value = '';
+		el( 'email' ).value = '';
+		console.log( allePersonen );
+		alert( 'Gespeichert' );
+	}
+
+
+}
+	</script>
+<link rel="stylesheet" href="d4-datenverwaltung.css">
+
+</head>
+<body>
+
+	<nav>
+		<ul>
+			<li id="tab1"><a href="#">Home</a></li>
+			<li id="tab2"><a href="#">Eingabe</a></li>
+			<li id="tab3"><a href="#">Ausgabe</a></li>
+		</ul>
+	</nav>
+
+	<section id="inhalt1">
+		<h1>Datenverwaltung</h1>
+		<p>WIFI Javascript ...</p>
+
+	</section>
+
+<style>
+input[type="text"] { border:1px solid #000; border-radius:7px; padding:5px; }
+label { opacity:0.2; transition:opacity 0.5s; }
+:focus + label { opacity:1; }
+</style>
+
+	<section id="inhalt2">
+		<h1>Eingabe</h1>
+		<form action="?">
+
+			<input type="text" id="vorname">
+			<label for="vorname">Vorname</label>
+			<br>
+			<input type="text" id="nachname">
+			<label for="nachname">Nachname</label>
+		 	<br>
+			<input type="text" id="email">
+			<label for="email">E-Mail-Adresse</label>
+		 	<br>
+			<button id="btn_speichern">Speichern</button>
+	  </form>
+	</section>
+
+	<section id="inhalt3">
+		<h1>Ausgabe</h1>
+	</section>
+
+
+</body>
+</html>

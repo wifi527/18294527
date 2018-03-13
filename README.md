@@ -21,15 +21,28 @@ Beispiele/Übungen
 - Zahlen addieren
 - Alter/Geschlecht
 
-
-
-
 ### TAG 2 (6.3.2018, C513)
 -	JS Sprachkern
   * Funktionen
+  * Schleifen
   * Event-Listener ELEMENT.onfocus, ELEMENT.onchange
+-	Programmablaufplan (PAP)
+-	Struktogramm Nassi.Shneiderman-Diagramm
 
 Beispiele/Übungen
 - Farben
 - Zahlrate Spiel
 - Währungsrechner einfach
+
+### TAG 3 (12.3.2018, C513)
+- HTML&CSS
+  * CSS Basics
+  * Selektoren und Spezifität
+  * Positionieren
+  * HTML-Tabellen
+- DOM
+  * createElement
+
+Beispiele/Übungen
+- Zahlrate Spiel
+- Lotto
