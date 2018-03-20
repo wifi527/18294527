@@ -1,0 +1,148 @@
+<!doctype html>
+<html>
+<head>
+	<title></title>
+	<meta charset="utf-8">
+	<script src="jquery-3.3.1.min.js"></script>
+	<script src="jquery-rot.1.0.0.js"></script>
+	<script>
+		$.fn.colorize = function( options ) {
+			// erweitere ein Settingsobjekt mit den Optionen/Parameter
+			var settings = $.extend({
+				r:0,
+				g:0,
+				b:0
+			},options);
+			var farbe = 'rgb('+settings.r+','+settings.g+','+settings.b+')';
+			console.log( farbe );
+			// transparente Methode liefert this zurück
+			return this.each( function() {
+				// this => ein Node Element aus dem jQuery Objekt
+				if ( $(this).hasClass( 'nocolor') == false ) {
+					$( this ).css({color: farbe});
+				}
+
+			} );
+
+		}
+// --------------------------------------
+
+// ERstelle eine neue Stringmethode
+// Überschreibe einen Buchstaben im String
+
+String.prototype.setCharAt = function(index,chr) {
+	return this.substr(0,index*1) + chr + this.substr(index*1+1);
+}
+
+// --------------------------------------
+
+// Suche Zahlen und ersetze diese mit <n> und mach den Inhalt rot und fett
+// Plugin benutzt RegularExpression
+
+	$.fn.colorNumberRegExp = function(col) {
+			return this.each( function() {
+					var inhalt = $(this).html();
+					inhalt = inhalt.replace( /([0-9]+)/g, '<n>$1</n>' );
+					$(this).html( inhalt );
+					$( 'n', this ).css({color:col, 'font-weight':'bold'});
+			});
+	}
+
+// --------------------------------------
+
+// Suche Zahlen und ersetze diese mit <n> und mach den Inhalt rot und fett
+
+	$.fn.colorNumber = function() {
+
+		return this.each( function() {
+
+			var inhalt = $( this ).html(), neu = '', tag = false;
+			//for ( var i = 0; i<inhalt.length; i++ ) {
+			for ( var i in inhalt ) {
+				console.log( inhalt[i] ); // Buchstabe
+				if ( inhalt[i] == '<' ) { tag = true; }
+				if ( inhalt[i] == '>' ) { tag = false; }
+
+				neu += isFinite(inhalt[i]) && inhalt[i]!=' ' && !tag ? '<n>'+inhalt[i]+'</n>' : inhalt[i];
+			}
+
+			$( this ).html( neu );
+
+			$( 'n', this ).css({color:'red', 'font-weight':'bold'});
+
+		});
+
+
+	}
+// --------------------------------------
+
+// Suche E-Mail und ersetze diese mit einem E-Mail Link
+// Plugin benutzt RegularExpression
+
+	$.fn.makeEMailLinksRegExp = function() {
+		return this.each( function() {
+				var inhalt = $(this).html();
+				inhalt = inhalt.replace( /(([a-z0-9\._+])+\@([a-z0-9\._+])+)/g, '<a href="mailto:$1">$1</a>' );
+				$(this).html( inhalt );
+		});
+	}
+
+// --------------------------------------
+
+// Suche E-Mail und ersetze diese mit einem E-Mail Link
+// ☺ wird durch ein @ ersetzt
+
+	$.fn.makeEMailLinks = function() {
+		return this.each( function() {
+			var inhalt = $( this ).html() + ' ', neu = '', wort = '', email = false;
+			for ( var i in inhalt ) {
+					if ( inhalt[i] == '☺' ) {
+
+						inhalt = inhalt.setCharAt(i,'@');
+						email = true;
+						//console.log( inhalt[i] );
+					}
+
+					if ( inhalt[i] == ' ' ) {
+						if ( email ) {
+							wort = '<a href="mailto:'+wort+'">'+wort+'</a>';
+						}
+						neu += wort+' ';
+						wort = '';
+						email = false;
+					} else {
+						wort += inhalt[i];
+					}
+			}
+			$( this ).html( neu );
+		});
+}
+
+//------------------------------------------
+	</script>
+	<script>
+$( document ).ready( function() {
+
+		//$( 'p:first' ).css({color:'red'});
+		//$( 'p:first' ).rot().css({fontSize:20});
+		//$( 'p' ).colorize({b:255,r:150});
+		//$( 'p' ).colorNumber(); // macht jede Zahl im Text FETT und ROT
+		$( 'p:first' ).colorNumberRegExp('red');
+		$( 'p:first +p' ).colorNumberRegExp('blue');
+		$( 'p' ).makeEMailLinks();
+
+});
+	</script>
+	<style>
+	</style>
+</head>
+<body>
+	<p>Absatz 1: Blindtext</p>
+	<p class="nocolor">Absatz 2: Blindtext</p>
+	<p>Absatz 3: <span style="font-size:28px">Blindtext 1000 Blindtext</span></p>
+
+	<p>Das ist ein Text und manchmal kommen im Text E-Mail-Adressen vor office☺wifiwien.at und es wäre schön wenn alle auch klickbar wären.</p>
+
+
+</body>
+</html>

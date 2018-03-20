@@ -1,0 +1,18 @@
+Übung 3) Abgabe bis 9.4.2018
+Newsticker
+Vorlage-Datei: ueb3-newsticker.html
+
+Der Inhalt der selektierten Elemente wird zu einer "Laufschrift"
+(=Newsticker). Der Text läuft von rechts nach links, sobald er
+komplett durchgelaufen ist, erscheint er wieder rechts.
+Umsetzung als jQuery-Plugin!
+
+Alle Newsticker sollen unabhängig von der Länge des Textes gleich schnell (selbe Geschwindigkeit) laufen.
+
+Optionen zur Formatierung (Breite, Geschwindigkeit, Anzahl Durchläufe)
+
+Anmerkung: Newsticker sind immer genau eine Zeile hoch!
+
+
+Zusatzaufgabe:
+- bei Mausover hält die Laufschrift an, Mausout läuft er weiter

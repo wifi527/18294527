@@ -1,0 +1,58 @@
+<!doctype html>
+<html>
+<head>
+	<title></title>
+	<meta charset="utf-8">
+	<script src="jquery-3.3.1.min.js"></script>
+	<script>
+var pics = [
+	'das-paradies-fuer-wintersportler.jpg',
+	'endlos-weite-schwuenge-ueber-perfekt-praeparierte-pisten-ziehen.jpg',
+	'erlebnishotel-fendels-familienhit.jpg',
+	'fruehlings-special-top-of-tyrol.jpg'
+];
+$( document ).ready( function() {
+
+	//alle images in div#bild einfügen
+	var i;
+	for ( i in pics ) {
+		$( '<img>' )
+			.attr( 'src', 'tirolbilder/'+pics[i] )
+			.appendTo( '#bild' )
+			.hide();
+	}
+	// blende erstes Bild ein
+	var aktuell = 0;
+
+	$( '#bild img' ).eq(0).show();
+
+	$( '#btn_nach').on('click',function() {
+		aktuell++;
+		if ( aktuell == pics.length ) { aktuell = 0; }
+		$( '#bild img' ).hide().eq(aktuell).fadeIn();
+	});
+
+	$( '#btn_vor').on('click',function() {
+		aktuell--;
+		if ( aktuell < 0 ) { aktuell = pics.length-1; }
+		$( '#bild img' ).hide().eq(aktuell).fadeIn();
+	});
+
+});
+	</script>
+	<style>
+
+
+
+	</style>
+</head>
+<body>
+	<div id="bild">
+		<h1>Bilder</h1>
+
+
+	</div>
+	<button id="btn_vor">voriges</button>
+	<button id="btn_nach">nächstes</button>
+</body>
+</html>

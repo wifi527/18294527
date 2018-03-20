@@ -1,0 +1,76 @@
+<!doctype html>
+<html>
+<head>
+	<title></title>
+	<meta charset="utf-8">
+	<script src="jquery-3.3.1.min.js"></script>
+	<script>
+/*
+	Ermittle eine Zufallszahl von/bis
+*/
+var randy = function( a,b ) {
+	return Math.floor( Math.random() * ( b-a+1 ) ) + a;
+}
+// -----------------------------------------
+$( document ).ready( function() {
+
+		// bei Klick auf Button
+		// erzeuge eine Tabelle mit einer Zeile und 5 Zellen im #ausgabe
+		$( 'button' ).on( 'click', function() {
+			var tabelle, zeile, zelle, i, bild, autofixiert;
+
+			// bevor ich neue Tabelle erzeuge, werden alle onclick auf Zellen entfernt
+			$( 'td' ).off( 'click' );
+			$( 'table' ).hide();
+
+			//$( '<table>' ).attr('border',1)
+			tabelle = $( '<table border="1">' ).appendTo( '#ausgabe' );
+			//$( '<tr>' ).appendTo( '#ausgabe table' );
+			zeile = $( '<tr>' ).appendTo( tabelle );
+
+			for ( i=1; i<=5; i++ ) {
+
+				// fixiertein voriger Tabelle?
+				if ( $('td', tabelle.prev() ).eq(i-1).hasClass( 'fixiert') ) {
+					bild = $('td', tabelle.prev() ).eq(i-1).html();
+					autofixiert = true;
+				} else {
+					bild = '<img src="bilder/wuerfel/wuerfel'+randy(1,6)+'cols5.jpg">';
+					autofixiert = false;
+				}
+
+				zelle = $( '<td>' )
+					.html( bild )
+					.appendTo( zeile )
+					.on('click', function() { // Event Bubbling, Klick auf Bild geht auch
+						// Zelle braucht Klasse
+						/*if ( $(this).hasClass( 'fixiert') ) {
+							$( this ).removeClass( 'fixiert' )
+						} else {
+							$( this ).addClass( 'fixiert' );
+						}*/
+						$( this ).toggleClass( 'fixiert' );
+					});
+				if ( autofixiert ) {
+					zelle.addClass( 'fixiert' );
+				}
+			}
+
+
+
+		});
+
+});
+// -----------------------------------------
+	</script>
+	<style>
+img { vertical-align:bottom; transition:opacity 0.3s; }
+.fixiert { background:red; }
+.fixiert img { opacity:0.5; }
+	</style>
+</head>
+<body>
+	<button>würfeln</button>
+	<div id="ausgabe"></div>
+</body>
+</html>

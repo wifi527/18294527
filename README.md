@@ -46,3 +46,39 @@ Beispiele/Übungen
 Beispiele/Übungen
 - Zahlrate Spiel
 - Lotto
+
+### TAG 4 (13.03.2018, C513)
+-	JS Sprachkern
+  * Array
+  * Objekte (Grundlagen)
+
+Beispiele/Übungen
+- Tab-Navigation
+- Lotto
+- Datenverwaltung Benutzer
+
+### TAG 5 (19.03.2018, C513)
+- Wiederholung Basis
+- jQuery
+  * Basics
+  * transparente/destruktive/terminierende Methode
+  * Methoden-Chaining
+  * DOM-Elemente erzeugen
+- Funktionalität
+  * localStorage
+
+Beispiele/Übungen
+- Datenverwaltung Benutzer
+- Bilder Slideshow
+
+## T2. Programmieren mit Javascript - Aufbau
+### TAG 6 (20.03.2018, C513)
+-	JS Sprachkern
+  * Funktionen (Rekursion, Closure, Methode, IIFE)
+- jQuery
+  * jQuery Plugin Grundlagen
+
+Beispiele/Übungen
+- Bilder Carousel
+- Slotmachine
+- Countdown

@@ -1,0 +1,41 @@
+<!doctype html>
+<html>
+<head>
+	<title></title>
+	<meta charset="utf-8">
+	<script src="jquery-3.3.1.min.js"></script>
+	<script>
+/*
+	Ermittle eine Zufallszahl von/bis
+*/
+var randy = function( a,b ) {
+	return Math.floor( Math.random() * ( b-a+1 ) ) + a;
+}
+// -----------------------------------------
+$( document ).ready( function() {
+
+		// bei Klick auf Button
+		// erzeuge eine Tabelle mit einer Zeile und 5 Zellen im #ausgabe
+
+		//$( '<table>' ).attr('border',1)
+		$( '<table border="1">' ).append(
+			$( '<tr>' ).append( function() {
+				var cells = [];
+				for( i=1; i<=5; i++ ) {
+					cells.push( $( '<td>' ).html(i) )
+				}
+				return cells;
+			})
+		).appendTo( '#ausgabe' )
+
+});
+// -----------------------------------------
+	</script>
+	<style>
+	</style>
+</head>
+<body>
+	<button>würfeln</button>
+	<div id="ausgabe"></div>
+</body>
+</html>

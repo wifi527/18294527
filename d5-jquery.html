@@ -1,0 +1,150 @@
+<!doctype html>
+<html>
+<head>
+	<title></title>
+	<meta charset="utf-8">
+	<script src="jquery-3.3.1.min.js"></script>
+	<script>
+
+window.onload = function() {
+
+	//document.getElementById( 'idabsatz1' ).innerHTML = 'Neuer Text';
+
+	//$( '#idabsatz1' )[0].innerHTML = 'Neuer Text';
+
+	$( '#idabsatz1' ).html( '<b>Neuer</b> Text' );
+	$( '#idabsatz3' ).css( 'color', 'red' );
+
+	$( '.classabsatz' ).css( {
+		color:'green',
+		'font-weight':'bold',
+		fontSize:20
+	} );
+
+	$( '[name=namewifibild]').css({width:100,height:100});
+
+	$( 'li:first-child' ).css({color:'red'});
+
+/*
+	$( 'li + li, #idabsatz2' ).html( 'alles anders' );
+	$( 'li + li, #idabsatz2' ).css({background:'#ccc'});
+*/
+
+	// Methodenverkettung, methodchaining
+	$( 'li + li, #idabsatz2' )
+		.html( 'alles anders' )
+		.css({background:'#ccc'});
+
+	// HTMLNodeElement
+	console.log( document.getElementById( 'idabsatz1') );
+
+	//jQuery Objekt
+	console.log( $( '#idabsatz1' ) );
+
+	// HTMLNodeElement > jQuery Objekt
+	var node = document.getElementById( 'idabsatz1');
+	console.log( $( node ) );
+
+	// jQuery Objekt > HTMLNodeElement
+	var jObj = $( '#idabsatz1' );
+	console.log( jObj.get(0) );
+	console.log( jObj[0] );
+
+	// transparenten jQuery Methoden
+	// liefert selbes jQuery-Objekt zurück
+	console.log( jObj );
+	console.log( jObj.html('Hallo Welt') );
+
+	// destruktive jQuery Methoden
+	jObj.next().html( 'Hallo nochmal Welt!' );
+	$( 'li:nth-child(3)' ).html( '3' ).prev().html( '2' ).parent().css({border:'2px solid red'});
+
+	// terminierende jQuery Methode
+	console.log( $( '#idabsatz3' ).css('color','blue').html() );
+
+
+	// -----------------------------------------------
+
+	var div = document.createElement( 'div' );
+	$( document.createElement('div') )
+	//$( '<div></div>' )
+	var div = $( '<div>' );
+	div.html( 'NEU!!!' );
+
+	/*$( 'body' )
+		.append( div )
+		.css({background:'red'});*/
+
+	//$( 'body' ).prepend( div );
+
+	/*div
+		.appendTo( 'body' )
+		.css({background:'red'});;*/
+
+	/*$( 'body' )
+		.append( div.css({background:'red'}) );*/
+
+	$( 'body' )
+		.append(
+			$('<div>')
+				.attr( {'contenteditable': true,'data-x':17} )
+				.html( 'NEU!!!')
+				.css({ color:'red'})
+		);
+
+
+
+	// -----------------------------------------------
+	//document.getElementById( 'idlink' ).onclick = function() {}
+
+	$( '#idlink' )
+		.on( 'click', function( event ) {
+				event.preventDefault();
+				//this.innerHTML = 'geklickt';
+				$(this).css({color:'pink'});
+		} )
+		.on( 'mouseover', function() { });
+
+
+}
+
+	</script>
+	<style>
+	</style>
+</head>
+<body>
+<h3>jQuery DOM Navigation (Traversing) und Manipulation</h3>
+
+<p id="idabsatz1" class="classabsatz">Alter Absatzinhalt.</p>
+<p id="idabsatz2" class="classabsatz">Alter Absatzinhalt.</p>
+<p id="idabsatz3">Absatzinhalt.</p>
+<hr>
+
+<img src="bilder/wifi.jpg" alt="Wifi" name="namewifibild">
+<img src="bilder/wifi.gif" alt="Wifi WKO" name="namewifibild">
+
+<ul>
+    <li>HTML</li>
+    <li>CSS</li>
+    <li>JS</li>
+    <li>PHP</li>
+</ul>
+<hr>
+
+<span></span><span></span><span></span>
+
+<div><p><span></span></p></div>
+<hr>
+
+<p id="idabsatz4">Dieser Absatzinhalt wurde gelesen ...</p>
+<p id="idabsatz5">... und hier her geschrieben.</p>
+
+<div id="idloeschen">
+    <p>div mit Kinder löschen ...</p>
+    <p>div mit Kinder löschen ...</p>
+</div>
+<hr>
+
+<a href="http://www.wifiwien.at/" id="idlink">Testlink</a>
+</body>
+</html>

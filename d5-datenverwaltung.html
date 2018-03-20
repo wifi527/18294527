@@ -1,0 +1,216 @@
+<!doctype html>
+<html>
+<head>
+	<title></title>
+	<meta charset="utf-8">
+	<script src="wifi.funktionen.js"></script>
+	<script>
+var blendeAlleAus = function() {
+		el( 'inhalt1' ).className = '';
+		el( 'inhalt2' ).className = '';
+		el( 'inhalt3' ).className = '';
+		el( 'tab1' ).className = '';
+		el( 'tab2' ).className = '';
+		el( 'tab3' ).className = '';
+}
+
+var allePersonen = [];
+// lade Daten aus dem lokalen Speicher
+var lokalAlle = localStorage.getItem( 'alle' );
+if ( lokalAlle ) { // nur wenn was drin steht, Array überschreiben
+	allePersonen = JSON.parse( lokalAlle ); // wandelt String wieder in Objekt/Array um
+}
+
+var machTabelle = function() {
+	var tabelle, zeile, zelle, i;
+	tabelle = document.createElement( 'table' );
+	tabelle.setAttribute( 'border', 1 );
+	el( 'inhalt3' ).innerHTML = '<h1>Ausgabe</h1>';
+	el( 'inhalt3' ).appendChild( tabelle );
+
+	for ( i = 0; i<allePersonen.length; i++ ) {
+		zeile = document.createElement( 'tr' );
+		tabelle.appendChild( zeile );
+
+		zelle = document.createElement( 'td' );
+		zelle.setAttribute( 'contenteditable', true );
+		zelle.innerHTML = allePersonen[i].vorname;
+		zeile.appendChild( zelle );
+		zelle = document.createElement( 'td' );
+		zelle.setAttribute( 'contenteditable', true );
+		zelle.innerHTML = allePersonen[i].nachname;
+		zeile.appendChild( zelle );
+		zelle = document.createElement( 'td' );
+		zelle.setAttribute( 'contenteditable', true );
+		zelle.innerHTML = allePersonen[i].email;
+		zeile.appendChild( zelle );
+
+		// Zelle mit Links
+		zelle = document.createElement( 'td' );
+		zelle.innerHTML = '<a href="#" id="edit'+i+'">Änderungen speichern</a> <a href="#" id="loesche'+i+'">Löschen</a>';
+		zeile.appendChild( zelle );
+
+		el( 'edit' + i ).onclick = function( event ) {
+			event.preventDefault();
+			var personNummer = this.id.substr(4) * 1;
+
+			// DOM Traversing
+			var alleTD = this.parentNode.parentNode.getElementsByTagName( 'td' );
+
+			allePersonen[ personNummer ].vorname = alleTD[0].innerHTML;
+			allePersonen[ personNummer ].nachname = alleTD[1].innerHTML;
+			allePersonen[ personNummer ].email = alleTD[2].innerHTML;
+
+			localStorage.setItem( 'alle', JSON.stringify( allePersonen ) );
+
+			alert( 'Änderungen gespeichert' );
+
+		}
+
+		el( 'loesche' + i ).onclick = function( event ) {
+			event.preventDefault();
+			var personNummer = this.id.substr(7) * 1;
+			// this => Link der geklickt wurde
+			// this.id => ID vom Link
+			// this.id.substr(7) => Text von ID ab dem 8. Buchstaben
+			// this.id.substr(7) * 1 => in Zahl umwandeln, entspricht Index von Person
+			alert( 'Gelöscht' );
+
+			// lösche Person aus Array
+			allePersonen.splice( personNummer, 1 );
+
+			//localStorage Update
+			localStorage.setItem( 'alle', JSON.stringify( allePersonen ) );
+
+			// erzeuge Tabelle neu mit Daten
+			machTabelle();
+		}
+
+	}
+
+
+
+}
+
+
+window.onload = function() {
+	// zeige Home beim Laden der Seite
+	el( 'tab1' ).className = 'aktiv';
+	el( 'inhalt1' ).className = 'aktiv';
+
+
+	// -----------------------------------------------
+	el( 'tab1' ).onclick = function( event ) {
+		event.preventDefault();
+		//el( 'inhalt1' ).style.display = 'block';
+		blendeAlleAus();
+		el( 'tab1' ).className = 'aktiv';
+		el( 'inhalt1' ).className = 'aktiv';
+
+
+	}
+	// -----------------------------------------------
+	el( 'tab2' ).onclick = function( event ) {
+		event.preventDefault();
+		blendeAlleAus();
+		el( 'tab2' ).className = 'aktiv';
+		el( 'inhalt2' ).className = 'aktiv';
+	}
+	// -----------------------------------------------
+	el( 'tab3' ).onclick = function( event ) {
+		event.preventDefault();
+		blendeAlleAus();
+		el( 'tab3' ).className = 'aktiv';
+		el( 'inhalt3' ).className = 'aktiv';
+		machTabelle();
+	}
+	// -----------------------------------------------
+	el( 'btn_speichern' ).onclick = function( event ) {
+		event.preventDefault();
+
+		var person = {};
+		person.vorname = el( 'vorname' ).value;
+		person.nachname = el( 'nachname' ).value;
+		person.email = el( 'email' ).value;
+
+		allePersonen.push( person ); // Objekt in Array speichern
+
+		// JSON
+		// '{ "vorname":"Max", "nachname":"Muster" }'
+
+		// Object > JSON-String
+		//console.log( person );
+		//console.log( person.toString() );
+		//console.log( JSON.stringify( person ) );
+
+		//localStorage.setItem( 'vorname', person );
+		//localStorage.setItem( 'person', JSON.stringify( person ) );
+		localStorage.setItem( 'alle', JSON.stringify( allePersonen ) );
+
+
+		el( 'vorname' ).value = '';
+		el( 'nachname' ).value = '';
+		el( 'email' ).value = '';
+		console.log( allePersonen );
+		alert( 'Gespeichert' );
+	}
+	// -----------------------------------------------
+	el( 'loeschealle' ).onclick = function( event ) {
+		event.preventDefault(); // beim Hyperlink nicht zu href springen
+		localStorage.clear();
+		allePersonen = []; // Daten im aktuellen UI auch leer machen
+		//localStorage.removeItem( 'alle' );
+		alert( 'Daten gelöscht.' );
+	}
+
+}
+	</script>
+<link rel="stylesheet" href="d4-datenverwaltung.css">
+
+</head>
+<body>
+
+	<nav>
+		<ul>
+			<li id="tab1"><a href="#">Home</a></li>
+			<li id="tab2"><a href="#">Eingabe</a></li>
+			<li id="tab3"><a href="#">Ausgabe</a></li>
+		</ul>
+	</nav>
+
+	<section id="inhalt1">
+		<h1>Datenverwaltung</h1>
+		<p>WIFI Javascript ...</p>
+		<p><a href="http://www.wifiwien.at" id="loeschealle">Daten löschen</a></p>
+	</section>
+
+<style>
+input[type="text"] { border:1px solid #000; border-radius:7px; padding:5px; }
+label { opacity:0.2; transition:opacity 0.5s; }
+:focus + label { opacity:1; }
+</style>
+
+	<section id="inhalt2">
+		<h1>Eingabe</h1>
+		<form action="?">
+
+			<input type="text" id="vorname">
+			<label for="vorname">Vorname</label>
+			<br>
+			<input type="text" id="nachname">
+			<label for="nachname">Nachname</label>
+		 	<br>
+			<input type="text" id="email">
+			<label for="email">E-Mail-Adresse</label>
+		 	<br>
+			<button id="btn_speichern">Speichern</button>
+	  </form>
+	</section>
+
+	<section id="inhalt3">
+		<h1>Ausgabe</h1>
+	</section>
+
+
+</body>
+</html>

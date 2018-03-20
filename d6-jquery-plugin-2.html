@@ -1,0 +1,52 @@
+<!doctype html>
+<html>
+<head>
+	<title></title>
+	<meta charset="utf-8">
+	<script src="jquery-3.3.1.min.js"></script>
+	<script src="jquery-rot.1.0.0.js"></script>
+	<script>
+		$.fn.colorize = function( options ) {
+			var settings = $.extend({
+				r:0,
+				g:0,
+				b:0
+			},options);
+			var farbe = 'rgb('+settings.r+','+settings.g+','+settings.b+')';
+			console.log( farbe );
+			//return this.css({color: farbe});
+
+			//this.css({color: farbe});
+
+			return this.each( function() {
+				// this => ein Node Element aus dem jQuery Objekt
+				if ( $(this).hasClass( 'nocolor') == false ) {
+					$( this ).css({color: farbe});
+				}
+
+			} );
+
+		}
+
+	</script>
+	<script>
+$( document ).ready( function() {
+
+		//$( 'p:first' ).css({color:'red'});
+		$( 'p:first' ).rot().css({fontSize:20});
+		$( 'p' ).colorize({b:255,r:150});
+
+
+
+
+});
+	</script>
+	<style>
+	</style>
+</head>
+<body>
+	<p>Absatz 1: Blindtext</p>
+	<p class="nocolor">Absatz 2: Blindtext</p>
+	<p>Absatz 3: Blindtext</p>
+</body>
+</html>
