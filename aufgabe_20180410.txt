@@ -1,0 +1,33 @@
+Übung 4) Abgabe bis 23.4.2018
+ToDo-Listen Applikation
+
+A) Schnittstellen Dokumentation
+Es sollen Aufgaben erstellt/gespeichert werden.
+Es müssen Aufgaben erledigt markiert werden.
+Liste sollte nach Datum und/oder Priorität sortiert werden können.
+Aufgaben können editiert und gelöscht werden.
+
+Aufgaben bestehen aus (Beispiel):
+- Titel
+- Text
+- Priorität (1-10)
+- Erstellungsdatum
+- Datum zu erledigen
+
+
+B) Clientseite lt. Schnittstellenbeschreibung
+
+Im UI werden alle TODOs als Boxen gelistet, sortiert nach Datum
+ und Prioritäten. TODOs werden je nach Priorität (1-10) unterschiedlich
+ eingefärbt.
+
+Man kann neue Aufgaben erstellen (Create), bestehende editieren und
+löschen. Durch Klick und ziehen nach links (mobile swipe) werden Tasks
+als erledigt markiert.
+
+Da die Serverseite noch nicht vorliegt, muss derzeit mit Dummy-Requests
+und Variablen/Array/Objekten gearbeitet werden.
+
+Zusatzaufgabe:
+- Filterfunktionen (zB nur Prio 1-4, alle heutigen, usw.)
+- mobile/swipe

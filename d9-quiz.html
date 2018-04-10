@@ -1,0 +1,133 @@
+<!doctype html>
+<html>
+<head>
+	<title></title>
+	<meta charset="utf-8">
+	<script src="jquery-3.3.1.min.js"></script>
+	<script>
+$.ajaxSetup({
+	url:'http://wifi.1av.at/527/quiz.php',
+	method:'post',
+	contentType:'application/json'
+});
+
+// Frage laden
+var stufe = 0, maxStufe = 3, punkte = 0;
+var ladeFrage = function() {
+	$( '#loading' ).show();
+	stufe++;
+	$.ajax({
+		data:JSON.stringify({anfragetyp:'frage',schwierigkeit:stufe}),
+		success:function( response ) {
+				$( '#loading, #frage' ).toggle();
+				$( '#q' ).html( response.frage );
+				for ( var i in response.antworten ) {
+						$( '#frage button' )
+							.eq(i)
+							.data('i',i)
+							.html( response.antworten[i] )
+							.on('click', function() {
+								var i = $(this).data('i');
+								$( '#progress div' ).stop();
+								$( '#frage button' ).off( 'click' ); // Eventlistener entfernen, damit nicht mehrere Antworten angeklickt werden können
+								ueberpruefeAntwort(i,response.id);
+							});
+				}
+				$( '#progress div' ).css({width:'100%'});
+				startCountdown( 5, function() {
+						$( '#frage button' ).off( 'click' );
+						ueberpruefeAntwort(5,response.id);
+				} );
+		}
+	})
+}
+// Antwort überprüfen
+var ueberpruefeAntwort = function( antwort, id ) {
+	$.ajax({
+		data:JSON.stringify({anfragetyp:'check',id:id}),
+		success:function(response) {
+			$( '#frage button').eq(antwort).css({background:'red'});
+			$( '#frage button').eq(response.richtig).css({background:'green'});
+			if ( antwort == response.richtig ) {
+				punkte += 1000000/maxStufe * $( '#progress div' ).width() / $( '#progress' ).width();
+			}
+			setTimeout( function() {
+				$( '#frage button').css({background:''});
+				$( '#frage' ).hide();
+				if ( stufe < maxStufe ) {
+					ladeFrage();
+				} else {
+					endeQuiz();
+				}
+			}, 2000 );
+		}
+	});
+}
+
+
+// Quiz Start
+var username = '';
+$( document ).on( 'click', '#start', function( event ) {
+	event.preventDefault();
+	username = $( '#deinname' ).val();
+	if ( username != '' ) {
+		$( 'form' ).hide();
+		ladeFrage();
+	}
+});
+
+// Quiz Ende
+var endeQuiz = function() {
+	alert( username+' du hast '+punkte+' Punkte erreicht!' );
+}
+
+// ProgressBar
+var startCountdown = function( s, callback ) {
+	s *= $( '#progress div' ).width() / $( '#progress' ).width();
+	$( '#progress div' ).animate({width:0}, s * 1000, 'linear', callback );
+}
+	</script>
+	<style>
+	* { font:25px Arial; }
+	html, body { height:100%; padding:0; margin:0; }
+	body { overflow:hidden; }
+	#bg { filter: blur(0px); transform:scale(1); transition:transform 30s, filter 5s; position:absolute; z-index:-1; top:0; left:0; right:0; bottom:0; background:url(http://orf.at/static/images/site/news/20150939/millionenshow_15_jahre_body_assinger_a.4644228.jpg); background-size:cover; }
+	#bg.zoomHim { transform:scale(2);  filter: blur(10px); }
+	#wrapper {  display:flex; justify-content: center; align-items:center;
+		height:100%;}
+	form { text-align:center; }
+	#deinname { display:block; margin:0 auto; }
+	#frage,#loading { display:none; }
+	#frage { text-align:center; }
+	#frage button { font-size:2em; }
+
+#progress { border:1px solid #000; width:300px; height:30px; }
+#progress div { width:100%; height:100%; background:green;
+	transition:background 1s;
+	border-right:1px solid #000;
+ }
+
+	</style>
+</head>
+<body>
+<div id="bg"></div>
+<div id="wrapper">
+	<form method="post" action="?">
+		<label>Dein Name</label>
+		<input type="text" id="deinname" autocomplete="off">
+		<button id="start">Los geht's</button>
+	</form>
+	<div id="loading">
+		Frage wird geladen...
+	</div>
+	<div id="frage">
+			<h1 id="q"></h1>
+			<button></button>
+			<button></button><br>
+			<button></button>
+			<button></button><br>
+			<div id="progress"><div></div></div>
+		</div>
+</div>
+</body>
+</html>

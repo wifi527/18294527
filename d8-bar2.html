@@ -1,0 +1,69 @@
+<!doctype html>
+<html>
+<head>
+	<title></title>
+	<meta charset="utf-8">
+	<script src="jquery-3.3.1.min.js"></script>
+	<script>
+var countdownBar = function( sekunden ) {
+	var stufen = 1;
+	// bei 5 Sekunden => steps 0.2 => 1/sekunden
+	// 1 => 0.8 => 0.6 => 0.4 => 0.2 => 0
+	// ENDE
+	var meinI = setInterval( function() {
+		var wert = 	$( '#bar' ).val(); // aktueller Wert
+		if ( wert == 0 ) { clearInterval(meinI); return; } // wenn es ein setInterval gibt, gibt es auch ein clearInterval!!!
+		$( '#bar' ).val( wert - 1/sekunden/stufen ); // neuer Wert
+	},1000/stufen);
+
+	// Lösung mit Variablen
+	/*var wert = 1;
+	setInterval( function() {
+		wert -=  1/sekunden;
+		$( '#bar' ).val( wert ); // neuer Wert
+	},1000);*/
+}
+
+var countdownDiv = function( sekunden ) {
+	var stufen = 25;
+	var wert = 1;
+	var meinI = setInterval( function() {
+		wert -= 1/sekunden/stufen;
+		if ( wert == 0 ) { clearInterval(meinI); return; } //
+		$( '#progress div' ).css({width: ( wert*100 )+'%' });
+
+		if ( wert < 0.5 ) {
+				$( '#progress div' ).css({background:'orange'});
+		}
+		if ( wert < 0.25 ) {
+				$( '#progress div' ).css({background:'red'});
+		}
+	},1000/stufen);
+
+
+}
+
+$( document ).on( 'click', '#btn', function() {
+	countdownBar( 5 ); // ändert progress-Element
+	countdownDiv( 5 ); // ändert Div-Element #progress
+});
+
+	</script>
+	<style>
+#btn { font:25px Arial;}
+#bar { height:30px; }
+
+#progress { border:1px solid #000; width:300px; height:30px; }
+#progress div { width:100%; height:100%; background:green;
+	transition:background 1s;
+	border-right:1px solid #000;
+	/*	background:linear-gradient( to right, red 0, yellow 150px, green 300px); */
+ }
+	</style>
+</head>
+<body>
+<div id="progress"><div></div></div>
+<progress id="bar" value="1"></progress>
+<button id="btn">Los</button>
+</body>
+</html>

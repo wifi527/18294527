@@ -1,0 +1,240 @@
+<!doctype html>
+<html>
+<head>
+	<title></title>
+	<meta charset="utf-8">
+	<link rel="stylesheet" href="jqueryui/jquery-ui.min.css">
+	<link rel="stylesheet" href="jqueryui/jquery-ui.theme.min.css">
+	<script src="jquery-3.3.1.min.js"></script>
+	<script src="jqueryui/jquery-ui.min.js"></script>
+	<script>
+var db = '';
+
+/* $.ajaxSetup() -> gilt für alle Request, und man muss es nicht bei jedem $.ajax dazu schreiben */
+$.ajaxSetup({
+	url:'http://wifi.1av.at/527/quizcms.php',
+	method:'post',
+	contentType:'application/json'
+});
+
+/* globale Errorfunktion für Request, falls Callback-Error nicht definiert wurde */
+$(document).ajaxError( function (e, jqxhr, settings, exception) {
+    alert(settings.url + " Failed");
+});
+
+var frageEntfernen = function( id ) {
+	$.ajax({
+		data:JSON.stringify({anfragetyp:'entfernen',id:id,db:db}),
+		success:function(response){
+			if ( response.erfolg ) {
+				ladeFragenVomServer();
+				alert( 'Daten wurden gelöscht.','Erfolg');
+
+			} else {
+				alert( 'Fehler...' );
+			}
+		}
+	})
+
+}
+
+var ladeFragenVomServer = function() {
+	// REQUEST!
+	$.ajax({
+		data:JSON.stringify({anfragetyp:'lesen',db:db}),
+		success:function(response) {
+			console.log( response ); // Objekt vom Server
+			console.log( response.fragen ); // Array
+			console.log( response.fragen[0] ); // 1. Frage => Objekt
+
+			$( '#alle' ).empty(); // Inhalt von #alle leer machen
+			var accordionDiv = $( '<div>' ).appendTo( '#alle' );
+
+			for ( var i in response.fragen ) {
+			//for ( var i = 0; i < response.fragen.length; i++ ) {
+				var titelFrage =  'ID #'+response.fragen[i].id+'<br> '+response.fragen[i].frage;
+
+				$( '<h3>' ).html( titelFrage ).appendTo( accordionDiv );
+
+				var antworten = '<b>Antworten</b><br>';
+				// response.fragen[i].antworten => Array
+				for (var j in response.fragen[i].antworten ) {
+					antworten += (j*1+1)+': '+response.fragen[i].antworten[j];
+					if ( j == response.fragen[i].richtig ) {
+						antworten += ' (<b>RICHTIG</b>)';
+					}
+					antworten += '<br>';
+				}
+
+				// data(...) speichert Wert direkt beim Button, später bei Click kann man wieder darauf zugreifen
+				var btnEntfernen = $('<button>').html('Löschen').data('i',i);
+
+				btnEntfernen.on('click',function(){
+						var i = $(this).data('i');
+						frageEntfernen( response.fragen[i].id );
+				});
+
+				// Lösung mit IIFE
+				/*(function(i){
+				btnEntfernen.on('click',function(){
+						frageEntfernen( response.fragen[i].id );
+				});
+				}(i));*/
+
+				var btnEditieren = $('<button>').html('Editieren');
+
+				$( '<div>' )
+					.append( $('<p>').html( antworten ) )
+					.append( $('<p>').html( 'Schwierigkeit: '+response.fragen[i].schwierigkeit  ) )
+					.append( btnEntfernen )
+					.append( btnEditieren )
+					.appendTo( accordionDiv );
+			}
+
+			accordionDiv.accordion(); //jQueryUI Akkordion
+
+
+
+		}
+	})
+}
+
+var macheAlertDialog = function( text, titel ) {
+	// wenn titel kein Wert dann nimm Standardwert
+	titel = titel || 'ERROR';
+	$( "#alert-dialog" ).attr('title', titel );
+	$( "#alert-dialog p" ).html( text );
+	$( "#alert-dialog" ).dialog({
+		modal: true,
+		buttons: {
+			Ok: function() {
+				$( this ).dialog( "close" );
+			}
+		}
+	});
+}
+// überschreibe vorhande Funktion alert mit eigener
+window.alert = macheAlertDialog;
+//window.alert = console.log;
+
+$( document ).ready( function() {
+	$( "#alert-dialog,#dialog-confirm" ).hide();
+	$( '#quizcms' ).tabs({
+		activate:function( event, ui	) {
+
+			db = $( '#db' ).val();
+
+			if( ui.newPanel.attr('id') == 'alle' ) {
+				ladeFragenVomServer(); // Darstellung in einem Akkordion
+			}
+		}
+	});
+
+
+
+
+});
+
+$( document ).on( 'submit', '#neu form', function(event) {
+	event.preventDefault();
+	var neueFrage = {
+		anfragetyp:'neu',
+		frage:$('#frage').val(),
+		antworten:[
+			$('#a1').val(),
+			$('#a2').val(),
+			$('#a3').val(),
+			$('#a4').val()
+		],
+		schwierigkeit:$('#schwierigkeit').val(),
+		richtig:$('[name="a"]:checked').val(),
+		db:db
+	}
+	$( '#neu button' ).prop('disabled', true );
+	$.ajax({
+		url:'http://wifi.1av.at/527/quizcms.php',
+		method:'post',
+		contentType:'application/json', // weil in Schnittstelle Datenformat Request JSON steht!!!
+		data:JSON.stringify(neueFrage), // stringifizieren siehe oben
+		success:function( response ) {
+			if ( response.id ) {
+				alert( 'Daten wurden gespeichert.', 'ERFOLG' );
+				$( '#neu form' ).get(0).reset(); // Formular zurücksetzen
+			} else {
+				/*if ( response.fehlernummer == 407 ) {
+
+					alert( 'Daten nicht vollständig' );
+				} else {
+					alert( 'Anderer Fehler...' );
+				}*/
+				switch( response.fehlernummer ) {
+					case 407: alert( 'Daten nicht vollständig' ); break;
+					case 408: alert( 'Frage bereits vorhanden' ); break;
+					default: alert( 'Unerwarteter Fehler' );
+				}
+
+
+			}
+		},
+		error:function() {
+			alert( 'Geht was nicht...');
+		},
+		complete:function() {
+			$( '#neu button' ).prop('disabled', false );
+		}
+	});
+
+});
+
+	</script>
+	<style>
+	</style>
+</head>
+<body>
+	<div id="quizcms">
+		<ul>
+			<li><a href="#home">Home</a></li>
+			<li><a href="#alle">Zeige alle Fragen</a></li>
+			<li><a href="#neu">Neue Frage</a></li>
+		</ul>
+		<div id="home">
+			<h1>Willkommen im QuizCMS</h1>
+			<p>Nur für berechtigte User!</p>
+			<p><b>Datenbank:</b> <input type="text" id="db" value=""><br>(leer lassen für allgemeine Datenbank)</p>
+		</div>
+		<div id="alle">
+				<!-- <button id="lade">Lade Fragen</button> -->
+		</div>
+		<div id="neu">
+				<form>
+					<input type="text" id="frage" placeholder="Frage"><br>
+					<input type="text" id="a1" placeholder="Antwort A"><input type="radio" name="a" value="0"><br>
+					<input type="text" id="a2" placeholder="Antwort B"><input type="radio" name="a" value="1"><br>
+					<input type="text" id="a3" placeholder="Antwort C"><input type="radio" name="a" value="2"><br>
+					<input type="text" id="a4" placeholder="Antwort D"><input type="radio" name="a" value="3"><br>
+					<select id="schwierigkeit">
+						<option value="1">1</option>
+						<option value="2">2</option>
+						<option value="3">3</option>
+						<option value="4">4</option>
+						<option value="5">5</option>
+						<option value="6">6</option>
+						<option value="7">7</option>
+						<option value="8">8</option>
+					</select>
+					<button>Speichern</button>
+				</form>
+		</div>
+	</div>
+
+	<!-- Dialog für Fehlermeldungen -->
+	<div id="alert-dialog" title="ERROR">
+		<p>Das ist die Fehlermeldung</p>
+	</div>
+
+<div id="dialog-confirm" title="Sind Sie sicher?">
+  <p><span class="ui-icon ui-icon-alert" style="float:left; margin:12px 12px 20px 0;"></span>Wollen Sie die Frage wirklich löschen?</p>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,68 @@
+<!doctype html>
+<html>
+<head>
+	<title>AJAX....</title>
+	<meta charset="utf-8">
+	<script src="jquery-3.3.1.min.js"></script>
+	<script>
+/*
+$( document ).ready( function() {
+	$( '#b1' ).on( 'click', function() {
+	});
+});
+*/
+
+var ajaxLoader = function() {
+	$( '<div id="ajaxloader">' )
+		.css({
+			position:'fixed',
+			top:0,
+			left:0,
+			right:0,
+			bottom:0,
+			'z-index':2147483647,
+			background:'rgba(255,255,255,0.9)',
+			display:'flex',
+			'align-items':'center',
+			'justify-content':'center',
+			'text-align':'center'
+		})
+		.appendTo( 'body' )
+		.html( '<div>Bitte warten...<br><img src="ajax.gif"></div>');
+}
+
+$( document ).on( 'click', '#b1', function( event ) {
+	event.preventDefault();
+
+	$(this).prop('disabled', true); // Button kann nicht geklickt werden
+	ajaxLoader();
+
+	var request = new XMLHttpRequest();
+	request.open( 'GET', 'http://wifi.1av.at/527/text.php' );
+	request.send();
+
+	request.onreadystatechange = function() {
+		if ( request.readyState == 4 ) {
+			$( '#ausgabe' ).html( request.responseText );
+			$('#b1').prop('disabled', false);
+			$( '#ajaxloader' ).remove(); // Entfernt Element im DOM
+		}
+	}
+
+
+});
+
+
+
+	</script>
+	<style>
+	* { font:1.5rem Arial; }
+	#b1 { position:absolute; z-index:1000; }
+	</style>
+</head>
+<body>
+<button id="b1">Starte Request</button>
+<!-- <a href="#" id="b1">Starte</a> -->
+<div id="ausgabe"></div>
+</body>
+</html>

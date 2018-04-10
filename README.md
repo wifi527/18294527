@@ -73,12 +73,37 @@ Beispiele/Übungen
 
 ## T2. Programmieren mit Javascript - Aufbau
 ### TAG 6 (20.03.2018, C513)
--	JS Sprachkern
-  * Funktionen (Rekursion, Closure, Methode, IIFE)
 - jQuery
+  * DOM Manipulation/Traversing
   * jQuery Plugin Grundlagen
 
 Beispiele/Übungen
 - Bilder Carousel
-- Slotmachine
-- Countdown
+- Würfelspiel
+
+### TAG 7 (03.04.2018, C513)
+-	JS Sprachkern
+  * Funktionen (Rekursion, Closure, Methode, IIFE)
+- Funktionalität
+  * Client/Server mit AJAX
+
+Beispiele/Übungen
+- Währungsrechner
+
+### TAG 8 (09.04.2018, C513)
+- Funktionalität
+  * Client/Server mit AJAX
+  * setTimeout, setInterval, requestAnimationFrame
+- Schnittstellen Beschreibung für Webservices
+
+Beispiel/Übungen
+- Datenverwaltung Quiz
+
+### TAG 9 (10.04.2018, C513)
+- Funktionalität
+  * Client/Server mit AJAX
+
+Beispiel/Übungen
+- AJAX Content Loader
+- Datenverwaltung Quiz
+- Quiz Frontend

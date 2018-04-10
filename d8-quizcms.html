@@ -1,0 +1,124 @@
+<!doctype html>
+<html>
+<head>
+	<title></title>
+	<meta charset="utf-8">
+	<link rel="stylesheet" href="jqueryui/jquery-ui.min.css">
+	<link rel="stylesheet" href="jqueryui/jquery-ui.theme.min.css">
+	<script src="jquery-3.3.1.min.js"></script>
+	<script src="jqueryui/jquery-ui.min.js"></script>
+	<script>
+var ladeFragenVomServer = function() {
+	// REQUEST!
+	$( '#alle' ).empty(); // alles löschen
+		$.ajax({
+			url:'http://wifi.1av.at/527/quizcms.php',
+			method:'post',
+			contentType:'application/json',
+			data:JSON.stringify({
+				anfragetyp:'lesen'
+			}),
+			success:function( response ) {
+				var acc = $( '<div id="accordion">' ).appendTo( '#alle' );
+				for ( var i in response.fragen ) {
+					$( '<h3>').html( '(ID: '+response.fragen[i].id+') '+response.fragen[i].frage ).appendTo( acc );
+					var antworten = '', richtig;
+					for (var j=0; j<4; j++ ) {
+							richtig = response.fragen[i].richtig == j ? ' <b>(RICHTIG)</b>' : '';
+							antworten += (j+1)+': '+response.fragen[i].antworten[j] + richtig +'<br>';
+					}
+
+
+					$( '<div>' ).html( '<b>Antworten</b><br>'+antworten+'<br>Schwierigkeit: '+response.fragen[i].schwierigkeit+'<br><br>' ).appendTo( acc ).append(
+						$( '<button>' ).html('Löschen')
+					).append(
+						$( '<button>' ).html('Editieren')
+					);
+				}
+				$( '#accordion' ).accordion();
+			}
+		});
+}
+
+$( document ).ready( function() {
+	$( '#quizcms' ).tabs({
+		activate:function( event, ui	) {
+			if( ui.newPanel.attr('id') == 'alle' ) {
+				ladeFragenVomServer(); // Darstellung in einem Akkordion
+			}
+		}
+	});
+});
+
+$( document ).on( 'submit', '#neu form', function(event) {
+	event.preventDefault();
+	var neueFrage = {
+		anfragetyp:'neu',
+		frage:$('#frage').val(),
+		antworten:[
+			$('#a1').val(),
+			$('#a2').val(),
+			$('#a3').val(),
+			$('#a4').val()
+		],
+		schwierigkeit:$('#schwierigkeit').val(),
+		richtig:$('[name="a"]:checked').val()
+	}
+	$( '#neu button' ).prop('disabled', true );
+	$.ajax({
+		url:'http://wifi.1av.at/527/quizcms.php',
+		method:'post',
+		contentType:'application/json', // weil in Schnittstelle Datenformat Request JSON steht!!!
+		data:JSON.stringify(neueFrage), // stringifizieren siehe oben
+		success:function( response ) {
+			if ( response.id ) {
+				alert( 'Daten wurden gespeichert.' );
+				$( '#neu form' ).get(0).reset(); // Formular zurücksetzen
+				$( '#neu button' ).prop('disabled', false );
+			}
+		}
+	});
+
+});
+
+	</script>
+	<style>
+	</style>
+</head>
+<body>
+	<div id="quizcms">
+		<ul>
+			<li><a href="#home">Home</a></li>
+			<li><a href="#alle">Zeige alle Fragen</a></li>
+			<li><a href="#neu">Neue Frage</a></li>
+		</ul>
+		<div id="home">
+			<h1>Willkommen im QuizCMS</h1>
+			<p>Nur für berechtigte User!</p>
+		</div>
+		<div id="alle">
+				<!-- <button id="lade">Lade Fragen</button> -->
+		</div>
+		<div id="neu">
+				<form>
+					<input type="text" id="frage" placeholder="Frage"><br>
+					<input type="text" id="a1" placeholder="Antwort A"><input type="radio" name="a" value="0"><br>
+					<input type="text" id="a2" placeholder="Antwort B"><input type="radio" name="a" value="1"><br>
+					<input type="text" id="a3" placeholder="Antwort C"><input type="radio" name="a" value="2"><br>
+					<input type="text" id="a4" placeholder="Antwort D"><input type="radio" name="a" value="3"><br>
+					<select id="schwierigkeit">
+						<option value="1">1</option>
+						<option value="2">2</option>
+						<option value="3">3</option>
+						<option value="4">4</option>
+						<option value="5">5</option>
+						<option value="6">6</option>
+						<option value="7">7</option>
+						<option value="8">8</option>
+					</select>
+					<button>Speichern</button>
+				</form>
+		</div>
+	</div>
+</body>
+</html>

@@ -1,0 +1,89 @@
+<!doctype html>
+<html>
+<head>
+	<title></title>
+	<meta charset="utf-8">
+	<script src="jquery-3.3.1.min.js"></script>
+	<script>
+$( document ).on( 'click', '#b1', function( event ) {
+	event.preventDefault(); // Formular nicht abschicken
+	var zahl = $( '#zahl' ).val() * 1; // Eingabe einlesen und in Zahl umwandeln
+	console.info( 'client', zahl );
+
+	$.ajaxSetup({
+		method:'POST'
+	});
+
+	$.ajax({
+		url:'http://wifi.1av.at/527/r_get_html.php',
+		method:'GET', // kann man auch weglassen, da Standard in jQuery
+		data:{ x:zahl }, // Bezeichnung x in Schnittstellenbeschreibung
+		dataType:'html', // ist in Antwort definiert, muss nicht angegeben werden
+		success:function( responseDaten ) { // Callback wenn Antwort kommt
+			var response = JSON.parse( responseDaten ); // wandelt String vom Server in Objekt um, wenn String einen JSON enthält
+			console.log( 'server', 'GET>HTML', response.x );
+		}
+	});
+
+	$.ajax({
+		url:'http://wifi.1av.at/527/r_post_html.php',
+		method:'POST',
+		data:{ x:zahl },
+		success:function( responseDaten ) {
+			var response = JSON.parse( responseDaten );
+			console.log( 'server', 'POST>HTML', response.x );
+		},
+		error:function() {
+			// wenn Request nicht 200
+			alert( 'Server nicht erreichbar' );
+		}
+	});
+
+	$.ajax({
+		url:'http://wifi.1av.at/527/r_post_json.php',
+		method:'POST',
+		data:{ x:zahl },
+		dataType:'json',
+		success:function( responseDaten ) {
+			console.log( 'server', 'POST>JSON', responseDaten.x );
+		}
+	});
+
+	// Daten als JSON schicken, bei komplexer Datenstruktur
+	$.ajax({
+		url:'http://wifi.1av.at/527/r_json_json.php',
+		method:'POST', // ist auch POST!
+		contentType:'application/json',
+		data:JSON.stringify({ x:zahl }),
+		dataType:'json',
+		success:function( responseDaten ) {
+			console.log( 'server', 'JSON>JSON', responseDaten.x );
+		}
+	});
+
+	//JSONP
+	//kein CORS
+	$.ajax({
+		url:'http://wifi.1av.at/527/r_get_jsonp.php',
+		method:'GET',
+		data:{ x:zahl },
+		dataType:'jsonp', // eigentlich ist Antwort Javascript
+		jsonpCallback:'nameOfCallbackFunction', // weiss ich von Schnittstellenbeschreibung
+		success:function( responseDaten ) {
+			console.log( 'server', 'GET>JSONP', responseDaten.x );
+		}
+	});
+
+});
+	</script>
+
+
+	<style>
+	* { font:1.5rem Arial; }
+	</style>
+</head>
+<body>
+	<input type="text" id="zahl" autocomplete="off"><button id="b1">Abschicken</button>
+	<div id="ausgabe"></div>
+</body>
+</html>

@@ -1,0 +1,83 @@
+<!doctype html>
+<html>
+<head>
+	<title></title>
+	<meta charset="utf-8">
+	<script src="jquery-3.3.1.min.js"></script>
+	<script>
+
+var countdown = function( c, id, callback ) {
+	$( id ).html( c );
+	if ( c == 0 ) {
+		callback();
+		return; // wenn 0 erreicht ist, hier beenden und kein neues Timeout starten
+	}
+
+	setTimeout( function() {
+		// c--;
+		countdown( --c, id, callback );
+	}, 1000);
+
+}
+var meinInterval;
+var countdownInterval = function( c, id ) {
+	$( id ).html( c );
+	// Interval in Variable merken, damit man es wieder beenden kann!
+	clearInterval( meinInterval );
+	meinInterval = setInterval( function() { // führt Funktion jede Sekunde (1000ms) aus
+		c--;
+		$( id ).html( c );
+		if ( c == 0 ) {
+			clearInterval( meinInterval );
+		}
+	}, 1000 );
+}
+
+
+var countdownRAF = function( c, id, start ) {
+	$( id ).html( c );
+	if ( c == 0 ) return;
+	requestAnimationFrame( function() {
+		if ( Date.now() - start >= 1000 ) {
+			c--;
+			start = Date.now();
+		}
+		countdownRAF( c, id, start );
+	});
+}
+
+/* Klick am Button => starte Countdown */
+$( document ).on( 'click', '#btn', function(event) {
+	event.preventDefault(); // nicht notwendig, weil kein <form>
+
+	var counter = 5;
+	countdown( counter, '#ausgabe', function() { alert( 'ENDE' ); } );
+	countdown( 10, '#ausgabe2', function()  { $('#ausgabe2').css({color:'red'}); } );
+	countdownInterval( 30, '#ausgabe3' );
+
+	// Date.now() => aktuelles Datum/Uhrzeit
+	//var jetzt = new Date(); // erzeugt ein Datumsobjekt
+	//console.log( jetzt.getTime(), Date.now() )
+	countdownRAF( 1000, '#ausgabe4', Date.now() );
+
+
+});
+
+
+
+
+
+	</script>
+	<style>
+* { font:25px Arial; }
+#ausgabe { font-size:2em; }
+	</style>
+</head>
+<body>
+<button id="btn">Starte Countdown</button>
+<div id="ausgabe"></div>
+<div id="ausgabe2"></div>
+<div id="ausgabe3"></div>
+<div id="ausgabe4"></div>
+</body>
+</html>

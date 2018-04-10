@@ -1,0 +1,76 @@
+<!doctype html>
+<html>
+<head>
+	<title></title>
+	<meta charset="utf-8">
+	<script src="jquery-3.3.1.min.js"></script>
+	<script>
+var cSelect;
+
+var calcRate = function() {
+	var r1 = $( '#c1' ).val();
+	var r2 = $( '#c2' ).val();
+	var input = $( '#input input' ).val();
+	var output = Math.round( input / r1 * r2 * 100 ) / 100;
+	$( '#output input' ).val( output );
+}
+
+$.ajax({
+	method:'GET',
+	url:'http://wifi.1av.at/527/ecb.php',
+	success:function( xml ) {
+		//var ecbDaten = $.parseXML( xml );
+		cSelect = $( '<select>' );
+		cSelect.append(
+				$( '<option>')
+					.html( 'EUR' )
+					.val( 1 )
+		);
+		$( 'Cube Cube Cube', xml ).each( function() {
+			cSelect.append(
+				$( '<option>')
+					.html( $( this ).attr( 'currency') )
+					.val($( this ).attr( 'rate') )
+			);
+		});
+
+		$( document ).ready( function() {
+			cSelect.clone().attr('id','c1').appendTo( '#input' );
+			cSelect.clone().attr('id','c2').appendTo( '#output' );
+			$( '#c2 option' ).eq(1).prop( 'selected', true);
+			$( 'select' ).on('change',calcRate);
+			$( 'input' ).on('input',calcRate);
+			$( 'body > div' ).show();
+		});
+
+
+
+	}
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	</script>
+	<style>
+body > div { display:none; }
+* { font:1.5rem Arial; }
+	</style>
+</head>
+<body>
+<div id="input"><input type="text" autocomplete="off"></div>
+<div id="output"><input type="text"  autocomplete="off" readonly></div>
+</body>
+</html>

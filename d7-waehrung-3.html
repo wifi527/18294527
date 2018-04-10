@@ -1,0 +1,110 @@
+<!doctype html>
+<html>
+<head>
+	<title></title>
+	<meta charset="utf-8">
+	<script src="jquery-3.3.1.min.js"></script>
+	<script>
+/*
+	 Flaggen API
+	http://wifi.1av.at/527/getflag.php
+
+	REQUEST -> POST
+	currency:ISOCode 3stellig
+
+	REPSONSE -> JSON
+	flag: URL
+
+	oder
+
+	error: FEHLERMELDUNG
+
+*/
+var holFlagge = function( cur, id ) {
+	$.ajax({
+		method:'POST',
+		url:'http://wifi.1av.at/527/getflag.php',
+		data:{currency: cur },
+		success:function( resp ) {
+			if ( resp.error ) {
+					alert( 'Flagge gibt es nicht' );
+			} else {
+				$( id ).attr( 'src',resp.flag );
+			}
+		}
+	});
+}
+
+
+$( document ).ready( function() {
+
+	var berechne = function() {
+			var eingabe,ausgabe,kurs1,kurs2;
+			eingabe = $( '#eingabe' ).val();
+			kurs1 = $( '#c1' ).val();
+			kurs2 = $( '#c2' ).val();
+			ausgabe = Math.round( eingabe * kurs2 / kurs1 * 100 ) / 100;
+			$( '#ausgabe' ).val( ausgabe );
+	};
+
+	$.ajax({
+		method:'GET',
+		url:'http://wifi.1av.at/527/ecb.php',
+		success:function( xml ) {
+
+			$( '<select id="c1">' ).appendTo( 'div:nth-child(1)' );
+ 			$( '<select id="c2">' ).appendTo( 'div:nth-child(2)' );
+
+			$( '<option>' )
+					.val( 1 )
+					.html( 'EUR' )
+					.appendTo( '#c1,#c2' );
+
+			$( 'Cube Cube Cube', xml ).each( function() {
+
+				$( '<option>' )
+						.val( $(this).attr('rate') )
+						.html( $(this).attr('currency') )
+						.appendTo( '#c1,#c2' );
+
+			});
+
+			// Setze Standardauswahl 2. Select auf USD (=2.Option)
+			$( '#c2 option' ).eq(1).prop( 'selected', true );
+
+			// Eventlistener bei Formfeldern rufen Funktion "berechne" auf
+			$( 'select' ).on( 'change', berechne );
+			$( '#eingabe' ).on( 'input', berechne );
+
+			$( '#c1' ).on( 'change', function() {
+					holFlagge( $(this).find('option:selected').html(), '#bild1' );
+			});
+			$( '#c2' ).on( 'change', function() {
+					holFlagge( $(this).find('option:selected').html(), '#bild2' );
+			});
+			holFlagge( 'EUR', '#bild1' );
+			holFlagge( 'USD', '#bild2' );
+
+		}
+	});
+
+});
+
+
+
+
+
+
+
+
+	</script>
+	<style>
+* { font:1.5rem Arial; }
+img { height:auto; width:60px; border:1px solid #000; margin:0 5px; vertical-align:middle;}
+	</style>
+</head>
+<body>
+<div><img src="" id="bild1"><input type="text" id="eingabe" autocomplete="off"></div>
+<div><img src="" id="bild2"><input type="text" id="ausgabe" autocomplete="off" readonly></div>
+</body>
+</html>

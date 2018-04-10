@@ -1,0 +1,107 @@
+QUIZ Datenverwaltung
+Schnittstellenbeschreibung
+
+URL: http://wifi.1av.at/527/quizcms.php
+
+1.) Neue Frage erstellen
+
+REQUEST-Methode: POST
+Format Daten: JSON
+Daten:
+{
+  anfragetyp:'neu',
+  frage:STRING,
+  antworten:ARRAY mit STRING(4x),
+  richtig:INTEGER{0,3},
+  schwierigkeit:INTEGER,
+  db(Optional):STRING
+}
+
+RESPONSE
+Format-Daten: JSON
+Daten - Erfolg:
+{
+  id:INTEGER
+}
+
+Fehler:
+{
+  fehlernummer: INTEGER,
+  feldname (Optional): STRING
+}
+
+2.) Frage ändern
+
+REQUEST-Methode: POST
+Format Daten: JSON
+Daten:
+{
+  anfragetyp:'edit',
+  id: INTEGER,
+  frage:STRING,
+  antworten:ARRAY mit STRING(4x),
+  richtig:INTEGER{0,3},
+  schwierigkeit:INTEGER,
+  db(Optional):STRING
+}
+
+RESPONSE
+Format-Daten: JSON
+Daten - Erfolg:
+{
+  erfolg:true
+}
+
+
+3.) Hol Frage(n)
+
+REQUEST-Methode: POST
+Format Daten: JSON
+Daten:
+{
+  anfragetyp:'lesen',
+  schwierigkeit(Optional):INTEGER,
+  db(Optional):STRING
+}
+
+RESPONSE
+Format-Daten: JSON
+Daten - Erfolg:
+{
+  fragen:ARRAY mit FrageObjekt
+}
+
+FrageObjekt
+{
+    id: INTEGER,
+    frage:STRING,
+    antworten:ARRAY mit STRING(4x),
+    richtig:INTEGER{0,3},
+    schwierigkeit:INTEGER
+}
+
+4.) Frage löschen
+
+REQUEST-Methode: POST
+Format Daten: JSON
+Daten:
+{
+  anfragetyp:'entfernen',
+  id: INTEGER,
+  db(Optional):STRING
+}
+
+RESPONSE
+Format-Daten: JSON
+Daten - Erfolg:
+{
+  erfolg:true
+}
+
+
+Anhang A) Fehlernummern
+404 -> nicht gefunden
+406 -> Datenformat/inhalt nicht korrekt
+407 -> Daten nicht vollständig
+408 -> Duplikat
+500 -> allgemeiner Fehler

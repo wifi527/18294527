@@ -1,0 +1,87 @@
+QUIZ
+Schnittstellenbeschreibung
+
+URL: http://wifi.1av.at/527/quiz.php
+
+1.) Frage abrufen
+
+REQUEST-Methode: POST
+Format Daten: JSON
+Daten:
+{
+  anfragetyp:'frage',
+  schwierigkeit:INTEGER,
+  db(Optional):STRING
+}
+
+RESPONSE
+Format-Daten: JSON
+Daten - Erfolg:
+{
+  id:INTEGER
+  frage:STRING,
+  antworten:ARRAY mit String
+}
+
+Fehler:
+{
+  fehlernummer: INTEGER,
+  feldname (Optional): STRING
+}
+
+2.) Antwort Check
+
+REQUEST-Methode: POST
+Format Daten: JSON
+Daten:
+{
+  anfragetyp:'check',
+  id: INTEGER,
+  antwort(Optional):INTEGER{0,3},
+  db(Optional):STRING
+}
+
+RESPONSE
+Format-Daten: JSON
+Daten - Erfolg (falls antwort im Request):
+{
+  korrekt: BOOLEAN
+}
+Daten - Erfolg (falls antwort NICHT im Request):
+{
+  richtig:INTEGER{0,3}
+}
+
+3.) Highscore
+
+REQUEST-Methode: POST
+Format Daten: JSON
+Daten:
+{
+  anfragetyp:'highscore',
+  name(Optional):STRING,
+  punkte(Optional):INTEGER{0,1000000},
+  db(Optional):STRING
+}
+
+RESPONSE
+Format-Daten: JSON
+Daten - Erfolg:
+{
+  highscore:ARRAY mit HighscoreObjekt
+}
+
+HighscoreObjekt
+{
+    name:STRING,
+    punkte:INTEGER,
+}
+
+
+Anhang A) Fehlernummern
+404 -> nicht gefunden
+406 -> Datenformat/inhalt nicht korrekt
+407 -> Daten nicht vollständig
+408 -> Duplikat
+500 -> allgemeiner Fehler
+501 -> Datenbank nicht vorhanden

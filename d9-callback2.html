@@ -1,0 +1,38 @@
+<!doctype html>
+<html>
+<head>
+	<title></title>
+	<meta charset="utf-8">
+	<script src="jquery-3.3.1.min.js"></script>
+	<script>
+var startCountdown = function( s, amEnde ) {
+	s *= $( '#progress div').width() / $( '#progress').width();
+	$( '#progress div' ).animate({width:0},s*1000,'linear',amEnde);
+
+}
+
+
+$( document ).ready( function()  {
+
+	$( '#start' ).on( 'click', function() {
+			startCountdown( 5, function() { alert('Ende'); } );
+	});
+
+	$( '#stop' ).on( 'click', function() {
+		$( '#progress div' ).stop();
+	});
+});
+	</script>
+	<style>
+#progress { border:1px solid #000; width:300px; height:30px; }
+#progress div { width:100%; height:100%; background:green;
+	transition:background 1s;
+	border-right:1px solid #000;
+ }
+	</style>
+</head>
+<body>
+<div id="progress"><div></div></div>
+<button id="start">START</button><button id="stop">STOP</button>
+</body>
+</html>

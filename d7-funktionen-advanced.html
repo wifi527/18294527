@@ -1,0 +1,145 @@
+<!doctype html>
+<html>
+<head>
+	<title></title>
+	<meta charset="utf-8">
+	<script src="jquery-3.3.1.min.js"></script>
+	<script>
+
+$( document ).ready( function() {
+	//"use strict";
+
+	var f1 = function( x ) { // lokale Variable f1
+		return x * x;
+	}
+
+	var klicker = function( event ) {
+		event.preventDefault();
+		this; // Element auf welches geklickt wurde
+		var x2 = f1( 2 );
+		$( '#ausgabe' ).html( x2 );
+
+		f2( 3, function( ergebnis ) {
+			alert( ergebnis );
+		} );
+
+		f2( 4, console.log );
+
+	}
+
+	$( '<button>' )
+		.html('Klick mich')
+		.appendTo('body')
+		.on('click', klicker ); // Callback-Funktion
+	$( '<div id="ausgabe">' ).appendTo( 'body' );
+
+	//for ( var z = 1; z<=500; z++ ) {
+	var z = 1;
+	var rf = function() {
+		setTimeout( function(){
+			z+=3;
+			$( '#ausgabe' ).css({left:z});
+			if ( z < 100 ) {
+				rf();
+			}
+		},100);
+	}
+
+	rf();
+	//}
+
+
+});
+
+
+// Callback-Funktion
+var f2 = function( x, callback ) {
+	var x2 = x * x;
+	callback( x2 );
+}
+
+// rekursive Funktionen
+var f3 = function( x, y ) {
+	var erg = x * x;
+	y--;
+	if ( y > 0 ) {
+		erg = f3( erg, y );
+	}
+	return erg;
+}
+console.log( 'rekursiv', f3(2,3) );
+
+// Methode
+var o = {
+	//m:function(x) {return x*x}
+};
+o.x = 1;
+o.y = 2;
+o.m = function(x) {
+	return x*x;
+}
+o.m2 = function() {
+	return this.x*this.x;
+}
+
+console.log( 'Methode', o.m(5) );
+o.x = 6;
+console.log( 'Methode', o.m2() );
+
+// Closure
+var multiply = function( a ) {
+	return function( b ) { return a * b; }
+}
+var m5 = multiply( 5 ); // m5 => Funktion
+console.log( 'Closure', m5(10) );
+
+// iife
+(function() {
+	"use strict";
+	var f1 = function(x) {
+		return x-1;
+	}
+	alert( 'hallo' );
+}());
+
+$( document ).ready( function() {
+
+
+	/*for ( var i = 1; i<=5; i++ ) {
+		$( '<a href="#">' )
+			.html( i )
+			.appendTo( 'body' )
+			.attr( 'data-x', i )
+			.on( 'click', function() {
+				alert( o.m( $(this).attr( 'data-x') ) );
+			});
+	}*/
+for ( var i = 1; i<=5; i++ ) {
+
+	(function(i) { // iife um Wert anzuheften
+		$( '<a href="#">' )
+			.html( i )
+			.appendTo( 'body' )
+			.on( 'click', function() {
+				alert( o.m( i ) );
+			});
+ 	}(i));
+
+}
+
+});
+
+
+
+
+
+	</script>
+	<style>
+#ausgabe { position:relative; left:0; height:1em; background:red; }
+a { margin:10px; }
+	</style>
+</head>
+<body>
+
+</body>
+</html>

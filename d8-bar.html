@@ -1,0 +1,58 @@
+<!doctype html>
+<html>
+<head>
+	<title></title>
+	<meta charset="utf-8">
+	<script src="jquery-3.3.1.min.js"></script>
+	<script>
+var countdownBar = function( sekunden ) {
+	var steps = 100;
+	var barValue = 1;
+	clearInterval(meinI);
+	$( '#bar' ).addClass( 'gruen' );
+	var meinI = setInterval( function() {
+		barValue -= 1/sekunden/steps;
+		$( '#bar' ).val( barValue );
+		if ( barValue < 0.80 ) {
+				$( '#bar' ).addClass( 'hellgruen' );
+		}
+		if ( barValue < 0.60 ) {
+				$( '#bar' ).addClass( 'gelb' );
+		}
+		if ( barValue < 0.4 ) {
+				$( '#bar' ).addClass( 'orange' );
+		}
+		if ( barValue < 0.2 ) {
+				$( '#bar' ).addClass( 'rot' );
+		}
+		if ( barValue <= 0 ) {
+			clearInterval(meinI);
+		}
+	}, 1000/steps );
+
+}
+$( document ).on( 'click', '#btn', function() {
+	countdownBar( 5 );
+});
+
+	</script>
+	<style>
+#btn { font:25px Arial;}
+#bar { height:30px; }
+
+progress::-moz-progress-bar { background-color:green; transition:background 0.5s; }
+.gruen::-moz-progress-bar { background-color:green; }
+.hellgruen::-moz-progress-bar { background-color:lightgreen; }
+.gelb::-moz-progress-bar { background-color:yellow; }
+.orange::-moz-progress-bar { background-color:orange; }
+.rot::-moz-progress-bar { background-color:red; }
+
+
+	</style>
+</head>
+<body>
+
+<progress id="bar" value="1"></progress>
+<button id="btn">Los</button>
+</body>
+</html>
