@@ -1,0 +1,102 @@
+<!doctype html>
+<html>
+<head>
+	<title></title>
+	<meta charset="utf-8">
+	<script src="jquery-3.3.1.min.js"></script>
+	<script>
+
+$( document ).ready( function() {
+		var xspeed = 0;
+	  var anzahl = 1;
+		var w = $(window).width();
+		var h = $(window).height();
+  	var canvas = $('<canvas>').css({
+			position:'absolute',
+			top:0,
+			left:0
+		})
+		.attr({
+			width:w,
+			height:h
+		})
+		.appendTo( 'body' );
+
+		/** wenn Schneeflocken mit Mausbewegung seitlich fliegen sollen...*/
+		$( document ).on( 'mousemove', function(event) {
+			var x = event.pageX;
+			var w = $(window).width();
+
+			xspeed = x/w * 12 - 6;
+
+		});
+
+
+	  var ctx = canvas.get(0).getContext('2d');
+
+
+		ctx.fillStyle = '#FFF';
+
+	  var Snowflake = function () {
+	    this.x = 0;
+	    this.y = 0;
+	    this.vy = 0;
+	    this.vx = 0;
+	    this.r = 0;
+	    this.reset();
+	  }
+
+	  Snowflake.prototype.reset = function() {
+	    this.x = Math.random() * w;
+	    this.y = Math.random() * -h;
+	    this.vy = 1 + Math.random() * 15;
+	    this.vx = 1 - Math.random();
+	    this.r = 1 + Math.random() * 3;
+	    this.o = 0.5 + Math.random() * 0.5;
+	  }
+
+		var i = 0;
+	  var active = false;
+	  var snowflakes = [], snowflake;
+	  for (i = 0; i < anzahl; i++) {
+	    snowflake = new Snowflake();
+	    //snowflake.reset();
+	    snowflakes.push(snowflake);
+	  }
+
+	  function update() {
+			anzahl++;
+  		snowflakes.push(new Snowflake());
+
+			var i;
+	    ctx.clearRect(0, 0, w, h);
+	    for (i = 0; i < anzahl; i++) {
+	      snowflake = snowflakes[i];
+	      snowflake.y += snowflake.vy;
+	      snowflake.x += snowflake.vx + xspeed*snowflake.vy/5;
+	      ctx.globalAlpha = snowflake.o;
+	      ctx.beginPath();
+	      ctx.arc(snowflake.x, snowflake.y, snowflake.r, 0, Math.PI * 2, false);
+	      ctx.closePath();
+	      ctx.fill();
+	      if (snowflake.y > h) {
+	        snowflake.reset();
+	      }
+	    }
+
+
+	  }
+		setInterval(update, 1000 / 50);
+	});
+	</script>
+	<style>
+	body {background:#000;}
+	canvas { pointer-events:none; }
+	a { color:#fff; font:30px Arial; }
+	</style>
+</head>
+<body><!--
+<a href="http://www.wifiwien.at">WIFI
+	<img src="https://www.w3schools.com/howto/img_fjords.jpg"></a>-->
+</body>
+</html>

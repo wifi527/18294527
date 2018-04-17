@@ -1,0 +1,63 @@
+<!doctype html>
+<html>
+<head>
+	<title></title>
+	<meta charset="utf-8">
+	<script src="jquery-3.3.1.min.js"></script>
+	<script>
+var bildObjekt = new Image();
+bildObjekt.src = 'taxi.png';
+
+var zeichneWas = function( winkel ) {
+	var ctx = $( '#c' ).get(0).getContext( '2d' );
+	ctx.clearRect(0,0,200,200);
+	ctx.fillStyle = '#ff0';
+	ctx.strokeStyle = '#333';
+	ctx.fillRect( 20,20,160,160 );
+	ctx.translate( 20, 20 );
+	ctx.lineWidth = 10;
+	ctx.moveTo( 0, 0 );
+	ctx.lineTo( 160, 0);
+	ctx.lineTo( 160, 160 );
+	//ctx.lineTo( 0, 0 );
+	ctx.closePath();
+	ctx.stroke();
+	ctx.beginPath();
+	ctx.arc( 80,80,40,(0.25+winkel)*Math.PI,(1.25+winkel)*Math.PI);
+	ctx.stroke();
+	ctx.fillStyle = '#fff';
+	ctx.fill();
+	ctx.fillStyle = '#333';
+	ctx.font = '20px Arial';
+	ctx.fillText( '© WIFI', 10, 170 );
+
+	// asynchron!!!
+		ctx.drawImage( bildObjekt, 80, 10  );
+		ctx.translate( -20, -20 );
+
+
+		window.requestAnimationFrame( function()  { zeichneWas(winkel+0.01); } );
+
+
+
+
+
+
+
+}
+
+$( document ).ready( function() {
+	bildObjekt.onload = function() {
+		zeichneWas( 0 );
+	}
+});
+	</script>
+	<style>
+#c { border:1px solid #000; /*width:200px; height:200px;*/ }
+
+	</style>
+</head>
+<body>
+	<canvas width="200" height="200" id="c"></canvas>
+</body>
+</html>

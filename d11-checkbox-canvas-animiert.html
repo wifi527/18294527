@@ -1,0 +1,73 @@
+<!doctype html>
+<html>
+<head>
+	<title></title>
+	<meta charset="utf-8">
+	<script src="jquery-3.3.1.min.js"></script>
+	<script>
+var drawCheckBox = function( ctx, checked, steps ) {
+
+	if ( steps == 0 ) {
+		clearInterval( ctx.interval );
+		if ( checked ) {
+			 ctx.interval = setInterval(function() {
+					steps+=2;
+					drawCheckBox(ctx,true,steps);
+				},20)
+		}
+	}
+	ctx.clearRect(0,0,40,40);
+	ctx.lineWidth = 1;
+	ctx.strokeStyle = '#000';
+	ctx.strokeRect( 2, 2, 36, 36 );
+	if ( checked ) {
+		ctx.beginPath();
+		ctx.strokeStyle = '#0C0';
+		ctx.lineWidth = 5;
+		ctx.moveTo( 8, 19 );
+		if ( steps < 10 ) {
+			ctx.lineTo( 8+steps, 19+steps );
+		} else {
+			ctx.lineTo( 18, 29 );
+			if ( steps < 30 ) {
+				ctx.lineTo( 18 + 0.75 * (steps-10), 29 - (steps - 10 ) );
+			} else {
+				ctx.lineTo( 33, 9 );
+				clearInterval( ctx.interval );
+			}
+		}
+
+		ctx.stroke();
+	}
+}
+
+
+var createCanvas = function() {
+	var checked = false;
+	var ctx = $( '<canvas>' )
+		.attr({width:40,height:40 })
+		.appendTo( 'body' )
+		.on( 'click', function() {
+			drawCheckBox( ctx, checked = !checked, 0 );
+		})
+		.get(0).getContext( '2d' );
+	drawCheckBox( ctx, checked, 0 );
+}
+
+
+$( document ).ready( function() {
+
+	createCanvas();
+
+});
+	</script>
+	<style>
+	</style>
+</head>
+<body>
+<!--
+	<input type="checkbox"> AGB gelesen<br>
+	<input type="checkbox"> Ja, meine Daten dürfen an Dritte, Vierte, Google und Facebook weitergegeben werden, damit ich bessere Werbung sehe!<br>
+	<input type="checkbox"> Ich will keinen Newsletter nicht bekommen, wenn ich diese Checkbox nicht aktiviert habe. -->
+</body>
+</html>

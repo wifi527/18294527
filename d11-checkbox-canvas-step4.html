@@ -1,0 +1,70 @@
+<!doctype html>
+<html>
+<head>
+	<title></title>
+	<meta charset="utf-8">
+	<script src="jquery-3.3.1.min.js"></script>
+	<script>
+
+var drawCheckbox = function( ctx, checked ) {
+	ctx.clearRect(0,0,40,40);
+	ctx.strokeStyle = '#000';
+	ctx.lineWidth = 1;
+	ctx.strokeRect(2,2,36,36);
+	if ( checked ) {
+		ctx.strokeStyle = '#0C0';
+		ctx.lineWidth = 5;
+		ctx.beginPath();
+		ctx.moveTo( 8, 19 );
+		ctx.lineTo( 18, 29);
+		ctx.lineTo( 33, 9);
+		ctx.stroke();
+	}
+
+}
+
+var createCanvas = function( checkbox ) {
+	var checked = false;
+	$(checkbox).css({
+		position:'absolute',
+		zIndex:'-1',
+		opacity:0
+	});
+	var ctx = $( '<canvas>')
+		.attr({width:40,height:40})
+		.insertBefore( $(checkbox) )
+		.on( 'click', function() {
+			/*if  (checked == true ) {
+				checked = false;
+			} else {
+				checked = true;
+			}*/
+			checked = !checked;
+			$(checkbox).prop('checked',checked);
+			drawCheckbox( ctx, checked );
+		})
+		.get(0).getContext( '2d' );
+
+	drawCheckbox( ctx, false );
+}
+
+
+$( document ).ready( function() {
+
+	$( '[type=checkbox]' ).each(function() {
+		createCanvas( this );
+	});
+
+
+
+});
+	</script>
+	<style>
+
+	</style>
+</head>
+<body>
+	<input type="checkbox"> alles gelesen<br>
+	<input type="checkbox"> alles gelesen<br>
+</body>
+</html>
