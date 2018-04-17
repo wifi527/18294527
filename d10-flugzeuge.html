@@ -1,0 +1,161 @@
+<!doctype html>
+<html>
+<head>
+	<title></title>
+	<meta charset="utf-8">
+	<script src="jquery-3.3.1.min.js"></script>
+	<script>
+Math.zufall = function(i,j) {
+	return Math.floor( Math.random() * (j-i+1) ) + i;
+}
+
+var Flugzeug = function() {
+	this.groesse = 10;
+	this.posX = Math.zufall(0,390);
+	this.posY = Math.zufall(0,590);
+	this.speed = Math.zufall(10,30)/10;
+	this.richtung = Math.zufall(0,359); // Winkel 0-360
+
+	this.div = $( '<div>' )
+		.css( {
+			position:'absolute',
+			left: this.posX,
+			top: this.posY,
+			width: this.groesse,
+			height: this.groesse,
+			/*background:'red'*/
+			/*backgroundImage:'url(black-plane.svg)',
+			backgroundSize:'100% 100%'*/
+		})
+		.append(
+				/*$('<img>').attr('src','red-plane.svg').css({width:15,height:15})*/
+				$( 'body>svg' ).clone().css({width:15,height:15})
+ 		)
+		.appendTo( '#feld' );
+
+
+	this.activate = function( event ) {
+		event.stopPropagation(); // kein weiteres Event-Bubbling
+		this.active = true;
+		//this.div.css( { background:'green' });
+		this.div.find('path').css({fill:'green'});
+	}
+	this.div.on( 'click', this.activate.bind(this) );
+
+	this.folgeKlick = function( event ) {
+
+			if ( 	this.active ) {
+				var klickX = event.pageX - $('#feld').offset().left;
+				var klickY = event.pageY - $('#feld').offset().top;
+				var diffX = klickX - this.posX;
+				var diffY = klickY - this.posY;
+				this.richtung = 180/Math.PI * Math.atan2( diffY, diffX );
+				this.div.find('path').css({fill:'black'});
+				this.active = false;
+			}
+	}
+	this.div.parent().on( 'click', this.folgeKlick.bind(this) );
+
+
+ 	this.flieg = function() {
+		this.posX += this.speed * Math.cos( this.richtung/180*Math.PI );
+		this.posY += this.speed * Math.sin( this.richtung/180*Math.PI );
+
+		if (  this.posX <= 0  || this.posX >= $('#feld').width()-this.groesse ) {
+			this.richtung = 180-this.richtung;
+		}
+
+		if (  this.posY <= 0  || this.posY >= $('#feld').height()-this.groesse ) {
+			this.richtung = 360-this.richtung;
+		}
+
+		this.div.find('svg').css({transform:'rotate('+this.richtung+'deg)'});
+
+		this.div.css({
+			left: this.posX,
+			top: this.posY
+		});
+
+		var _this = this;
+		setTimeout( function() {
+			_this.flieg(); // hier ist this window, daher Hilfsvariable _this verwenden!
+		}, 40 );
+		//setTimeout( this.flieg.bind(this), 40 );
+
+	}
+}
+
+Flugzeug.kollision = function( alle ) {
+	for (var i = 0; i<alle.length; i++ ) {
+		if ( alle[i].speed == 0 ) continue;
+		var x = alle[i].posX;
+		var y = alle[i].posY;
+		for ( var j = i+1; j<alle.length; j++ ) {
+			if ( alle[j].speed == 0 ) continue;
+			var x2 = alle[j].posX;
+			var y2 = alle[j].posY;
+			var abstand = Math.sqrt( Math.pow( x2-x,2 ) + Math.pow(y2-y,2) );
+			if ( abstand < 20 ) {
+				alle[i].speed = 0;
+				alle[j].speed = 0;
+				alle[i].div.find('path').css({fill:'#ccc'})
+				alle[j].div.find('path').css({fill:'#ccc'})
+				//alert( 'ACHTUNG!');
+				//return;
+			}
+		}
+	}
+	setTimeout( function() {
+		Flugzeug.kollision( alle );
+	}, 40 );
+}
+
+$( document ).ready( function() {
+
+
+
+	// alle 3 Sekunden erscheint ein neues Flugzeug!
+	var flugzeuge = [];
+	setInterval( function() {
+		flugzeuge.push( new Flugzeug() );
+		flugzeuge[ flugzeuge.length - 1 ].flieg();
+	}, 3000 );
+
+	Flugzeug.kollision( flugzeuge );
+
+});
+
+
+	</script>
+	<style>
+	#feld { border:1px solid #000; width:400px; height:600px;
+		position:relative;
+	}
+
+	#feld div::before {
+		display:block;
+		content:'';
+		position:absolute;
+		border:1px solid #000;
+		border-radius:50%;
+		width:30px;
+		height:30px;
+		left:-9px;
+		top:-9px;
+	}
+
+body > svg { display:none; }
+
+	</style>
+</head>
+<body>
+	<div id="feld"></div>
+
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 width="510px" height="510px" viewBox="0 0 510 510" style="enable-background:new 0 0 510 510;" xml:space="preserve">
+		<path d="M510,255c0-20.4-17.85-38.25-38.25-38.25H331.5L204,12.75h-51l63.75,204H76.5l-38.25-51H0L25.5,255L0,344.25h38.25
+			l38.25-51h140.25l-63.75,204h51l127.5-204h140.25C492.15,293.25,510,275.4,510,255z"/>
+</svg>
+
+</body>
+</html>

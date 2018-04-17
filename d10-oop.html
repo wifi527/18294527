@@ -1,0 +1,110 @@
+<!doctype html>
+<html>
+<head>
+	<title></title>
+	<meta charset="utf-8">
+	<script src="jquery-3.3.1.min.js"></script>
+	<script>
+// OOP ist cool!
+
+// Konstruktor-Funktion
+var Fahrrad = function( euro ) {
+	this.preis = euro || 500; // private Variable oder nicht?
+	this.farbe = 'weiss';
+	this.ausgabe = function() {
+		return 'Das Fahrrad ist '+this.farbe;
+	}
+	this.schaden = function( kosten ) {
+		this.preis-=kosten;
+	}
+	/*this.aktuellerPreis = function() {
+		return preis;
+	}*/
+}
+
+var mF = new Fahrrad( 2000 );
+mF.farbe = 'rot';
+console.log( mF.ausgabe() );
+var dF = new Fahrrad( );
+dF.farbe = 'blau';
+//mF.preis = 2000;
+mF.schaden( 200 );
+dF.schaden( 100 );
+console.log( mF.preis, dF.preis );
+
+// Prototype
+var S = function() {
+	this.x = 0;
+	this.y = 0;
+	this.sum = function() {
+		return this.x + this.y;
+	}
+}
+
+var summe1 = new S();
+var summe2 = new S();
+summe1.x = 5;
+summe1.y = 10;
+console.log( summe1.sum() );
+
+S.prototype.diff = function() {
+	return Math.abs( this.y - this.x );
+}
+
+console.log( summe1.diff() );
+
+var M = function() {
+	this.x = 0;
+	this.y = 0;
+}
+M.prototype.multi = function() {
+	return this.x * this.y;
+}
+M.prototype.sub = function() {
+	return this.y - this.x;
+}
+
+
+var m = new M();
+console.log( m );
+console.log( summe1 );
+m.x = 5;
+m.y = 6;
+console.log( m.multi() );
+console.log( m.toString() );
+
+var zahlen = [ 1,2,3, 4 ];
+
+var summeArray = function( arr ) {
+	var s = 0;
+	for ( var i = 0; i<arr.length; i++ ) {
+		s+=arr[i];
+	}
+	return s;
+}
+
+Array.prototype.sum = function() {
+		var s = 0;
+		for ( var i = 0; i<this.length; i++ ) {
+			s+=this[i];
+		}
+		return s;
+}
+
+Array.prototype.push = function( x ) {
+	if ( isNaN( x ) ) return;
+	this[ this.length ] = x;
+}
+
+zahlen.push( 5 );
+zahlen.push ( 'a' );
+
+console.log( zahlen.sum() );
+
+	</script>
+	<style>
+	</style>
+</head>
+<body>
+</body>
+</html>

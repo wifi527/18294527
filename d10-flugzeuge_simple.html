@@ -1,0 +1,147 @@
+<!doctype html>
+<html>
+<head>
+	<title></title>
+	<meta charset="utf-8">
+	<script src="jquery-3.3.1.min.js"></script>
+	<script>
+Math.zufall = function(i,j) {
+	return Math.floor( Math.random() * (j-i+1) ) + i;
+}
+
+var Flugzeug = function() {
+	this.groesse = 10;
+	this.posX = Math.zufall(0,390);
+	this.posY = Math.zufall(0,590);
+	this.speed = Math.zufall(10,30)/10;
+	this.richtung = Math.zufall(0,359); // Winkel 0-360
+
+	this.div = $( '<div>' )
+		.css( {
+			position:'absolute',
+			left: this.posX,
+			top: this.posY,
+			width: this.groesse,
+			height: this.groesse,
+			background: '#f00'
+		})
+		.appendTo( '#feld' );
+
+
+	this.activate = function( event ) {
+		event.stopPropagation(); // kein weiteres Event-Bubbling
+		this.active = true;
+		this.div.css( { background:'green' });
+	}
+	this.div.on( 'click', this.activate.bind(this) );
+
+	this.folgeKlick = function( event ) {
+
+			if ( 	this.active ) {
+				var klickX = event.pageX - $('#feld').offset().left;
+				var klickY = event.pageY - $('#feld').offset().top;
+				var diffX = klickX - this.posX;
+				var diffY = klickY - this.posY;
+				this.richtung = 180/Math.PI * Math.atan2( diffY, diffX );
+				this.div.css( { background:'red' });
+				this.active = false;
+			}
+	}
+	this.div.parent().on( 'click', this.folgeKlick.bind(this) );
+
+
+ 	this.flieg = function() {
+		this.posX += this.speed * Math.cos( this.richtung/180*Math.PI );
+		this.posY += this.speed * Math.sin( this.richtung/180*Math.PI );
+
+		if (  this.posX <= 0  || this.posX >= $('#feld').width()-this.groesse ) {
+			this.richtung = 180-this.richtung;
+		}
+
+		if (  this.posY <= 0  || this.posY >= $('#feld').height()-this.groesse ) {
+			this.richtung = 360-this.richtung;
+		}
+
+
+		this.div.css({
+			left: this.posX,
+			top: this.posY
+		});
+
+		var _this = this;
+		setTimeout( function() {
+			_this.flieg(); // hier ist this window, daher Hilfsvariable _this verwenden!
+		}, 40 );
+		//setTimeout( this.flieg.bind(this), 40 );
+
+	}
+}
+
+Flugzeug.kollision = function( alle ) {
+	for (var i = 0; i<alle.length; i++ ) {
+		if ( alle[i].speed == 0 ) continue;
+		var x = alle[i].posX;
+		var y = alle[i].posY;
+		for ( var j = i+1; j<alle.length; j++ ) {
+			if ( alle[j].speed == 0 ) continue;
+			var x2 = alle[j].posX;
+			var y2 = alle[j].posY;
+			var abstand = Math.sqrt( Math.pow( x2-x,2 ) + Math.pow(y2-y,2) );
+			if ( abstand < 20 ) {
+				alle[i].speed = 0;
+				alle[j].speed = 0;
+				alle[i].div.css({background:'#ccc'});
+				alle[j].div.css({background:'#ccc'})
+				//alert( 'ACHTUNG!');
+				//return;
+			}
+		}
+	}
+	setTimeout( function() {
+		Flugzeug.kollision( alle );
+	}, 40 );
+}
+
+$( document ).ready( function() {
+
+
+
+	// alle 3 Sekunden erscheint ein neues Flugzeug!
+	var flugzeuge = [];
+	setInterval( function() {
+		flugzeuge.push( new Flugzeug() );
+		flugzeuge[ flugzeuge.length - 1 ].flieg();
+	}, 3000 );
+
+	Flugzeug.kollision( flugzeuge );
+
+});
+
+
+	</script>
+	<style>
+	#feld { border:1px solid #000; width:400px; height:600px;
+		position:relative;
+	}
+
+	#feld div::before {
+		display:block;
+		content:'';
+		position:absolute;
+		border:1px solid #000;
+		border-radius:50%;
+		width:30px;
+		height:30px;
+		left:-11px;
+		top:-11px;
+	}
+
+	</style>
+</head>
+<body>
+	<div id="feld"></div>
+
+
+
+</body>
+</html>

@@ -100,10 +100,37 @@ Beispiel/Übungen
 - Datenverwaltung Quiz
 
 ### TAG 9 (10.04.2018, C513)
+-	JS Sprachkern
+  * Wiederholung Callback-Funktion
 - Funktionalität
   * Client/Server mit AJAX
 
 Beispiel/Übungen
-- AJAX Content Loader
 - Datenverwaltung Quiz
 - Quiz Frontend
+- Countdown
+
+
+### TAG 10 (16.4.2018, C513)
+-	JS Sprachkern
+  * Objekte (Attribute, Methoden, Literal)
+  * OOP (Konstruktor-Funktion, Prototype)
+- HTML/CSS
+  * SVG
+
+Beispiele/Übungen
+- Taxi
+- Flugzeuge
+
+## T3. Webapplikationen mit HTML5 und Javascript
+### TAG 11 (17.04.2018, C513)
+- Funktionalität
+  * Canvas
+- API/Framework
+  * Googemap Javascript API
+- Software Engineering
+  * Github.com
+
+Beispiele/Übungen
+- Checkbox/Radiobuttons
+- GMap Marker Applikation
