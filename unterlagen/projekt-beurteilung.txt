@@ -1,0 +1,16 @@
+Abschlussprojekt - Beurteilung
+
+- Projektunterlagen
+- Umfang
+- Komplexität
+- GUI (HTML/CSS)
+- dynamische Medieninhalte (Canvas, SVG, Video, Audio)
+- Mobile/Desktop
+- Frameworks
+- Server/Client Kommunikation (Requests)
+- Datenspeicherung
+
+Extra
+- NodeJS
+- Cordova/PhoneGap
+- 

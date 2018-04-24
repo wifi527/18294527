@@ -1,0 +1,64 @@
+<!doctype html>
+<html>
+<head>
+	<title></title>
+	<meta charset="utf-8">
+	<script src="jquery-3.3.1.min.js"></script>
+	<script>
+var makeList = function() {
+	$( '#output' ).empty();
+	$.ajax({
+		url:'http://localhost:5000/get_orte',
+		method:'GET',
+		success:function( o ) {
+
+			for (var i in o.alle ) {
+				$( '<div>' )
+					.append( $('<strong>').html( o.alle[i].name ) )
+					.append( $( '<span>').html( '('+o.alle[i].lat+'/'+o.alle[i].lng+')'))
+					.appendTo( '#output' );
+			}
+
+		}
+	});
+}
+
+$( document ).ready( function() {
+		makeList();
+});
+
+$( document ).on( 'submit', 'form', function( event ) {
+	event.preventDefault();
+	$.ajax({
+		url:'http://localhost:5000/orte',
+		method:'POST',
+		data:{
+			name:$('#name').val(),
+			lat:$('#lat').val(),
+			lng:$('#lng').val()
+		},
+		success:function( antwort ) {
+			if (antwort.saved )
+				alert( 'Speichern erfolgreich!' );
+			$( 'input' ).val('');
+			makeList();
+		}
+	})
+
+});
+	</script>
+	<style>
+	* { font:30px Arial; }
+	</style>
+</head>
+<body>
+	<form>
+		ORT <input type="text" id="name"><br>
+		LAT <input type="text" id="lat"><br>
+		LNG <input type="text" id="lng"><br>
+		<button>Speichern</button>
+	</form>
+	<hr>
+	<div id="output"></div>
+</body>
+</html>

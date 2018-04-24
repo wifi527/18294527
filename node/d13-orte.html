@@ -1,0 +1,81 @@
+<!doctype html>
+<html>
+<head>
+	<title></title>
+	<meta charset="utf-8">
+	<script src="js/jquery-3.3.1.min.js"></script>
+	<script>
+var makeList = function() {
+	$( '#orte' ).empty();
+	$.ajax({
+		url:'http://localhost:5000/zeigeorte',
+		method:'POST',
+		success:function( o ) {
+
+			for (var i in o.orte ) {
+				$( '<div>' )
+					.append( $('<strong>').html( o.orte[i].name ) )
+					.append( $( '<span>').html( '('+o.orte[i].lat+'/'+o.orte[i].lng+')'))
+					.appendTo( '#orte' );
+			}
+
+		}
+	});
+}
+
+$( document ).ready( function() {
+  makeList();
+});
+
+$( document ).on( 'submit', 'form', function( event ) {
+	event.preventDefault();
+	$.ajax({
+		url:'http://localhost:5000/orte',
+		method:'POST',
+		data:{
+			name:$('#name').val(),
+			lat:$('#lat').val(),
+			lng:$('#lng').val()
+		},
+		success:function( antwort ) {
+			alert( 'Speichern erfolgreich!' );
+			$( 'input' ).val('');
+      makeList();
+		}
+	})
+
+});
+	</script>
+	<style>
+body { font-family:Arial; font-size:0.8em; }
+hr { border:none; height:2px; background:linear-gradient(to right,#000 0, #FFF 1px, #FFF 5px, #000 9px); background-size:10px 2px; margin:1em 0; }
+hr { animation:bg infinite linear 0.5s; }
+@keyframes bg {
+ 0% { background-position:0 0; }
+100% { background-position:10px 0; }
+}
+h1 { animation:blink infinite steps(35) 10s ; overflow:hidden; white-space:nowrap; width:0%; }
+@keyframes blink {
+  0% { width:0;  }
+  20% { width:100%; }
+  95% { width:100%; }
+  100% { width:0; }
+}
+	</style>
+</head>
+<body>
+  <h1>Orte Verwaltung mit NodeJS</h1>
+  <h2>neuer Orte</h2>
+<form method="post">
+  ORT <input type="text" id="name"><br>
+  LAT <input type="text" id="lat"><br>
+  LNG <input type="text" id="lng"><br>
+  <button>Speichern</button>
+</form>
+  <hr>
+  <h2>gespeicherte Orte</h2>
+  <div id="orte">
+  ...
+  </div>
+</body>
+</html>

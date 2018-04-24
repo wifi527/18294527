@@ -128,9 +128,37 @@ Beispiele/Übungen
   * Canvas
 - API/Framework
   * Googemap Javascript API
-- Software Engineering
-  * Github.com
+- HTML/CSS
+  * Wiederholung Positionieren
+  * pointer-events:none
 
 Beispiele/Übungen
 - Checkbox/Radiobuttons
 - GMap Marker Applikation
+
+### TAG 12 (23.04.2018, C513)
+- Wiederholung
+  * Canvas
+  * setInterval, setTimeout
+  * OOP
+- Software Engineering
+  * Github.com
+- NodeJS
+  * http (createServer)
+  * fs (readFile, writeFile)
+  * express + body_parser
+
+Beispiele/Übungen
+- Timer
+- simple Servertasks
+
+### TAG 13 (24.04.2018, C513)
+- HTML/CSS
+  * CSS Animationen
+- NodeJS
+  * express + body_parser
+  * Websockets mit socket.io
+
+Beispiele/Übungen
+- Restful
+- Chat

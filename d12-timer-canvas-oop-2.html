@@ -1,0 +1,82 @@
+<!doctype html>
+<html>
+<head>
+	<title></title>
+	<meta charset="utf-8">
+	<script src="jquery-3.3.1.min.js"></script>
+	<script>
+var Timer = function( initValue ) {
+		this.count = initValue || 5;
+		this.speed = 1000;
+		this.max = this.count;
+		this.w = 100;
+		this.h = 100;
+		this.node = this.build();
+		this.ctx = this.node.getContext( '2d' );
+	}
+
+Timer.prototype.build = function() {
+	return $( '<canvas>' )
+		.attr('width',this.w)
+		.attr('height', this.h)
+		.get(0);
+}
+Timer.prototype.start = function() {
+	this.draw();
+	this.count--;
+	if ( this.count >= 0 ) {
+		setTimeout( this.start.bind(this), this.speed );
+	}
+}
+Timer.prototype.draw = function() {
+	var c = this.ctx, x, alpha;
+	c.clearRect( 0,0, this.w, this.h );
+
+	// dünner grauer Kreis
+	c.lineWidth = 1;
+	c.strokeStyle = '#ccc';
+	c.beginPath();
+	c.arc( this.w/2, this.h/2, this.w/2-10, 0, 2*Math.PI );
+	c.stroke();
+
+	//dicker Kreis
+	c.lineWidth = 4;
+	c.strokeStyle = '#000';
+	c.beginPath();
+	alpha = (2*Math.PI / this.max) * (this.max - this.count) - 0.5*Math.PI;
+	c.arc( this.w/2, this.h/2, this.w/2-10, alpha, 1.5*Math.PI );
+	c.stroke();
+
+	// gefüllte Kreisecke
+	c.beginPath();
+	c.fillStyle = '#eee';
+	c.moveTo( this.w/2, this.h/2 );
+	c.arc( this.w/2, this.h/2, this.w/2-10, alpha, 1.5*Math.PI );
+	c.lineTo( this.w/2, this.h/2);
+	c.fill();
+
+	//Text
+	c.font = '26px Arial';
+	c.fillStyle = '#000';
+	c.textAlign = 'center';
+	c.textBaseline = 'middle';
+	c.fillText( this.count, this.w/2 , this.h/2 + 2);
+}
+
+$( document ).ready( function() {
+	var countdown = new Timer( 10 ); // erzeuge neuen Timer
+	$( countdown.node ).appendTo( '#ausgabe' );
+	countdown.start();
+
+});
+
+
+	</script>
+	<style>
+
+	</style>
+</head>
+<body>
+	<div id="ausgabe"></div>
+</body>
+</html>

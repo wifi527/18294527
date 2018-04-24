@@ -1,0 +1,23 @@
+Übung 5) Abgabe bis 8.5.2018
+ToDo-Listen Applikation
+
+C) Serverseite lt. Schnittstellenbeschreibung
+mit NodeJS
+
+Daten werden lt. Schnittstellenbeschreibung am Server entgegengenommen, gespeichert und verwaltet. Antwort (Response) wie definiert.
+
+
+Übung 6) Abgabe bis 8.5.2018
+Objektorientiertes Programmieren
+
+Erstellen Sie eine Klasse mit der Dreiecke erzeugt werden können.
+
+Zum Erzeugen müssen drei Punkte P1, P2, P3 (jeweils mit x- und y-Koordinate) angegeben werden.
+
+Die Klasse bietet Möglichkeiten:
+- Berechnung der Seitenlänge (+Umfang)
+- Berechnung der Fläche
+https://de.wikipedia.org/wiki/Dreieck
+
+Zusatzaufgabe:
+- Klasse bietet die Möglichkeit einer optischen Darstellung des erstellen Dreiecks in einem Canvas

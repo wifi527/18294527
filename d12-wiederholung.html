@@ -1,0 +1,53 @@
+<!doctype html>
+<html>
+<head>
+	<title></title>
+	<meta charset="utf-8">
+	<script src="jquery-3.3.1.min.js"></script>
+	<script>
+// Javascript ohne jQuery
+/*window.onload = function() {
+
+	var alleAbs = document.getElementsByTagName( 'p' );
+	console.log( alleAbs );
+	for (var i = 0; i<alleAbs.length; i++ ) {
+	//for ( var i in alleAbs ) {
+		var inhalt = alleAbs[i].innerHTML; // Inhalt vom Absatz
+		var teile = inhalt.split(' '); // Array mit allen Wörtern
+		console.log( teile.length );
+
+		alleAbs[i].innerHTML += ' ('+teile.length+' Wörter)';
+
+	}
+
+}*/
+
+$( document ).ready( function() {
+
+	$( 'p' ).each( function() { // hol alle Absätze, mit jedem einzeln etwas tun
+		var inhalt = $(this).html();
+		// var inhalt = this.innerHTML;
+		var teile = inhalt.split(' ');
+		//$(this).html( inhalt+' ('+teile.length+' Wörter)'  );
+		$(this).append(
+			$('<span>')
+				.html(' ('+teile.length+' Wörter)' )
+				.css( {color:'red'})
+		)
+	});
+
+});
+
+
+	</script>
+	<style>
+	</style>
+</head>
+<body>
+	<p>JavaScript (kurz JS) ist eine Skriptsprache, die ursprünglich 1995 von Netscape für dynamisches HTML in Webbrowsern entwickelt wurde, um Benutzerinteraktionen auszuwerten, Inhalte zu verändern,</p>
+	<p>nachzuladen oder zu generieren und so die Möglichkeiten von HTML und CSS zu erweitern. Heute findet JavaScript auch außerhalb von Browsern Anwendung, so etwa auf Servern und in Microcontrollern.
+
+Der heutige Name der ursprünglich LiveScript genannten Sprache entstand 1996 aus einer Kooperation von Netscape mit Sun Microsystems. Deren Java-Applets, erstellt mit der gleichfalls 1995 veröffentlichten </p>
+<p>Programmiersprache Java, wurden mithilfe von LiveScript in den Netscape Navigator integriert. Um die Popularität von Java zu nutzen, wurde LiveScript in JavaScript umbenannt, obwohl die beiden Sprachen nur wenige Gemeinsamkeiten aufweisen. </p>
+</body>
+</html>

@@ -1,0 +1,53 @@
+<!doctype html>
+<html>
+<head>
+	<title>CHAT mit Websockets</title>
+	<meta charset="utf-8">
+  <script src="js/jquery-3.3.1.min.js"></script>
+  <script src="js/socket.io.slim.js"></script>
+	<script>
+var username = '', socket;
+$( document ).on( 'submit', 'form', function(event) {
+  event.preventDefault();
+  if ( username == '' ) {
+    // neuer User
+    username = $( '#m' ).val();
+    $('#m').attr({placeholder:'sag was...'}).val('');
+
+    // Verbindung zum Server mit Websocket
+    socket = io( 'http://10.135.13.1:26893' );
+    socket.emit( 'neueruser', username );
+    socket.on( 'servershout', function( msg ) {
+      $( '<li>' ).html( msg ).appendTo( 'ul' );
+      $('html,body').animate({scrollTop:$('li:last-child').offset().top},100);
+    });
+
+  } else {
+    // schon dabei, jetzt wird gechattet
+    var nachricht = $('#m').val();
+    $('#m').val('').focus();
+    socket.emit( 'clientshout', nachricht );
+  }
+});
+
+
+	</script>
+	<style>
+		* { margin: 0; padding: 0; box-sizing: border-box; }
+		body { font: 13px Helvetica, Arial; padding-bottom:50px; }
+		form { background: #000; padding: 3px; position: fixed; bottom: 0; width: 100%; }
+		form input { border: 0; padding: 10px; width: 80%; margin-right: .5%; }
+		form button { width: 19%; background: rgb(130, 224, 255); border: none; padding: 10px; }
+		#messages { list-style-type: none; margin: 0; padding: 0; }
+		#messages li { padding: 5px 10px; }
+		#messages li:nth-child(odd) { background: #eee; }
+		time {font-size:0.7em; color:#444; }
+	</style>
+</head>
+<body>
+	<ul id="messages"></ul>
+	<form action="">
+		<input type="text" id="m" autocomplete="off" placeholder="Dein Name"><button>Senden</button>
+	</form>
+</body>
+</html>

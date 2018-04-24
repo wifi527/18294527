@@ -1,0 +1,60 @@
+<!doctype html>
+<html>
+<head>
+	<title></title>
+	<meta charset="utf-8">
+	<script src="jquery-3.3.1.min.js"></script>
+	<script>
+// OOP
+var Timer = function() { // Konstruktor-Funktion
+	this.count = 10;
+	this.node = this.build();
+	this.ctx = this.node.getContext('2d');
+}
+Timer.prototype.build = function() { // erzeugt Canvas
+	return $( '<canvas>' ).attr({width:100,height:100}).get(0);
+}
+Timer.prototype.start = function() { // zählt runter
+	this.draw();
+	this.count--;
+	if ( this.count < 0 ) return; // Bei 0 ist Schluss!
+	//setTimeout( this.start.bind(this), 1000 )
+	var _this = this;
+	setTimeout( function() {
+		_this.start();
+	},1000);
+}
+Timer.prototype.draw = function() { // zeichnet Inhalt im Canvas
+	this.ctx.clearRect(0,0,100,100);
+	this.ctx.beginPath();
+	this.ctx.font = '26px Arial';
+	this.ctx.textAlign = 'center';
+	this.ctx.textBaseline = 'middle';
+	this.ctx.fillText( this.count, 50, 50 );
+}
+
+
+
+$( document ).ready( function() {
+	var timer = new Timer();
+	$( timer.node ).appendTo( '#ausgabe' );
+	timer.count = 50;
+	timer.start();
+
+	var timer2 = new Timer();
+	$( timer2.node ).appendTo( '#ausgabe' );
+	timer2.draw();
+	$( timer2.node ).on( 'click', function() {
+		timer2.start();
+	})
+});
+
+
+	</script>
+	<style>
+	</style>
+</head>
+<body>
+	<div id="ausgabe"></div>
+</body>
+</html>
