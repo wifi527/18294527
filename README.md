@@ -160,5 +160,14 @@ Beispiele/Übungen
   * Websockets mit socket.io
 
 Beispiele/Übungen
-- Restful
+- Chat
+
+### TAG 14 (30.04.2018, C513)
+- Software Engineering
+  * Test driven devolpment mit QUnit
+- Funktionalität
+  * Promises
+  * ES6
+
+Beispiele/Übungen
 - Chat

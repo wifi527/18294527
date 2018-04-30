@@ -1,0 +1,182 @@
+<!doctype html>
+<html>
+<head>
+	<title>ES6</title>
+	<meta charset="utf-8">
+	<script src="jquery-3.3.1.min.js"></script>
+	<script>
+// var vs. let
+var x = 1;
+let y = 2;
+for ( let i = 0; i<5; i++) {
+	console.log( i );
+}
+//console.log( i );
+
+// const für Konstante
+const pi = 3.14;
+//pi++;
+console.log( pi );
+
+// Arrow Funktionen
+var quadrat = function(a) {
+	return a*a;
+}
+
+// ES6
+var q = a => a*a;
+console.log( quadrat(5), q(5) );
+
+var mitCB = function( x, callback ) {
+	if ( isFinite(x) ) {
+		return callback(x);
+	} else {
+		return false;
+	}
+}
+
+var z = mitCB( 5, function( j ) { return j*j; } );
+var h = mitCB( 5, j => j+5 );
+
+// --- OOP mit ES6 ----
+
+var tier = {
+	beine:4,
+	removeBein:function() {
+		this.beine--;
+	}
+}
+
+
+console.log( tier );
+
+var o1 = {}; // Objektliteral
+var o2 = new Object(); // ES5
+var o3 = Object.create( Object.prototype ); // ES6
+var o4 = Object.create( {} );
+var o5 = Object.create( null );
+console.log( o1, o2, o3, o4, o5 );
+
+//var elefant = tier;  // nur ein Objekt, Pointer
+//elefant.removeBein();
+//console.log(tier);
+
+window.onload = function() {
+	var x = document.getElementById( 'x' );
+	x.innerHTML = '123';
+
+	//var xKopie = document.createElement( 'div' );
+	//var xKopie = Object.create( x );
+
+}
+
+
+var elefant = Object.create( tier );
+var spinne = Object.create( tier );
+
+console.log( tier, elefant, spinne );
+
+//elefant.beine = 4;
+tier.beine = 6;
+elefant.removeBein();
+
+elefant.__proto__.addBein = function() {
+	this.beine++;
+}
+
+spinne.addBein();
+
+tier.toString = function() {
+	return 'Tier mit '+this.beine+' Beinen';
+}
+
+console.log( tier.beine, elefant.beine, elefant );
+console.log( spinne );
+
+alert( spinne.toString() );
+
+// Eigenschaften von Objekten
+var Kreis = function( r ) {
+	this.radius = r;
+	// this.umfang = 0;
+}
+
+Object.defineProperty( Kreis.prototype, 'umfang', {
+	enumerable:true,
+	/*writable:false,*/
+	/*value:0*/
+	set:function( u ) { this.radius = u/2/Math.PI; },
+	get:function() { return 2*Math.PI*this.radius; }
+
+});
+
+var k = new Kreis( 3 );
+
+//k.umfang = 17; // setzen
+
+console.log( k.umfang );
+k.umfang = 10;
+console.log( k.radius );
+
+
+for ( var i in k ) { // alle enumierbaren Eigenschaften
+	console.log( i + ': '+k[i] );
+}
+
+/*
+var a = [1,2,3];
+/*Array.prototype.x = function() {
+	return this.length + 1;
+}* /
+Object.defineProperty( Array.prototype, 'x', {
+	enumerable:false,
+	writable:true,
+	value:function() {
+		return this.length + 1;
+	}
+});
+
+for ( var i in a ) {
+	console.log( i + ': '+a[i] );
+}
+*/
+
+class Tier {
+	constructor ( beine ) {
+		this.beine = beine;
+		this.toString = function() { return 'Tier hat '+this.beine+' Beine.'; }
+	}
+}
+
+class TierMitNamen extends Tier {
+	constructor ( beine, name ) {
+		super( beine ); // ruft Konstruktor von Tier auf
+		this.toString = function() { return name+' hat '+this.beine+' Beine.'; }
+	}
+}
+
+class SpinneMitNamen extends TierMitNamen {
+	constructor (name) {
+		super( 8, name );
+	}
+	removeBein() {
+		this.beine--;
+	}
+}
+
+var Fritzi = new Tier( 4 );
+alert( Fritzi );
+var Fritzi = new TierMitNamen( 4, 'Fritzi' );
+alert( Fritzi );
+var Fritzi = new SpinneMitNamen( 'Fritzi' );
+alert( Fritzi );
+Fritzi.removeBein();
+alert( Fritzi );
+	</script>
+	<style>
+	</style>
+</head>
+<body>
+<div id="x">Hallo</div>
+</body>
+</html>

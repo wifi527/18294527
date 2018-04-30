@@ -1,0 +1,54 @@
+<!doctype html>
+<html>
+<head>
+	<title></title>
+	<meta charset="utf-8">
+	<script src="js/jquery-3.3.1.min.js"></script>
+	<!-- <script async src="https://maps.googleapis.com/maps/api/js?callback=initKarte"></script> -->
+	<script>
+
+$( document ).on( 'click', 'button#loadLinie', function() {
+	//Request zum Server
+	$.ajax({
+		url:'http://localhost:5001/getWLData',
+		method:'POST',
+		success:function( response ) {
+			console.log( response );
+		}
+	});
+});
+$( document ).on( 'click', 'button#loadU6', function() {
+	//Request zum Server
+	$.ajax({
+		url:'http://localhost:5001/getLineData',
+		method:'POST',
+		data:{line:'U6'},
+		success:function( response ) {
+			console.log( response );
+		}
+	});
+});
+$( document ).on( 'click', 'button#loadU6Halt', function() {
+	//Request zum Server
+	$.ajax({
+		url:'http://localhost:5001/getHSData',
+		method:'POST',
+		data:{line:'U6'},
+		success:function( response ) {
+			console.log( response );
+		}
+	});
+});
+	</script>
+	<style>
+body { font-family:Arial; font-size:0.8em; }
+
+	</style>
+</head>
+<body>
+	<button id="loadLinie">Lade Liniendaten von Wienerlinien</button>
+	<button id="loadU6">Lade Stationen U6</button>
+	<button id="loadU6Halt">Lade Stationen U6 / Haltestelleninfo</button>
+	<div id="meineKarte" style="width:600px;height:400px;"></div>
+</body>
+</html>

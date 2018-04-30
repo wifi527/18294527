@@ -76,7 +76,8 @@ io.on( 'connection', function( socket ) {
     io.emit( 'servershout', makeTimeHTML()+'<em>'+user+' ist offline.</em>');
     for ( var i in aktiveUser ) {
       if ( user == aktiveUser[i] ) {
-        aktiveUser.splice(i,1); break;
+        aktiveUser.splice(i,1);
+        break;
       }
     }
   });
