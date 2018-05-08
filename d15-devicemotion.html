@@ -1,0 +1,44 @@
+<!doctype html>
+<html>
+<head>
+	<title></title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width">
+	<script src="jquery-3.3.1.min.js"></script>
+	<script>
+
+//http://wifi.1av.at/527/d15-devicemotion.html
+
+$( document ).ready( function() {
+
+	if ( !("ondevicemotion" in window) ) {
+		$( '#output' ).html( 'keine DeviceMotion möglich!' );
+	}
+
+	function handleMotionEvent(event) {
+
+	    var x = event.accelerationIncludingGravity.x;
+	    var y = event.accelerationIncludingGravity.y;
+	    var z = event.accelerationIncludingGravity.z;
+			$( '#output' ).html( 'X: '+x+'<br>Y: '+y+'<br>Z: '+z );
+
+			if ( z > 9 && y > 9 ) {
+				$( '#output' ).css({color:'red'});
+			}
+
+	    // Do something awesome.
+	}
+
+	window.addEventListener("devicemotion", handleMotionEvent, true);
+
+});
+	</script>
+	<style>
+	#output { border:1px solid #000; width:300px; padding:9px; }
+	</style>
+</head>
+<body>
+	<h1>DeviceMotionTest</h1>
+	<div id="output"></div>
+</body>
+</html>

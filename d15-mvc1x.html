@@ -1,0 +1,31 @@
+<!doctype html>
+<html>
+<head>
+	<title>Design Patterns sind cool!</title>
+	<meta charset="utf-8">
+	<!-- <script src="jquery-3.3.1.min.js"></script> -->
+	<script src="d15-mvc1-events.js"></script>
+	<script src="d15-mvc1-model.js"></script>
+	<script src="d15-mvc1-view.js"></script>
+	<script src="d15-mvc1-controller.js"></script>
+	<script>
+window.onload = function() {
+
+	var model = new MVC.Model( 10 );
+	var view = new MVC.View( model, document.getElementById('zahl') );
+	var controller = new MVC.Controller( model, view );
+
+	view.show();
+	setInterval( function() {
+		controller.update( model.get() - 1 );
+	}, 1000 );
+}
+	</script>
+	<style>
+	* { font:2rem Arial; }
+	</style>
+</head>
+<body>
+	Zahl: <span id="zahl">?</span>
+</body>
+</html>

@@ -1,0 +1,37 @@
+<!doctype html>
+<html>
+<head>
+	<title></title>
+	<meta charset="utf-8">
+	<script src="d15-mvc1-events.js"></script>
+	<script src="d15-mvc1-model.js"></script>
+	<script src="d15-mvc1-view.js"></script>
+	<script src="d15-mvc1-controller.js"></script>
+
+	<script>
+
+window.onload = function() {
+
+	var model = new MVC.Model(5);
+	var view = new MVC.View( model, document.getElementById( 'zahl')  );
+	var controller = new MVC.Controller( model, view );
+
+	view.show();
+	setTimeout( function() {
+		controller.update(20);
+	},1000);
+
+
+};
+
+
+	</script>
+	<style>
+	</style>
+</head>
+<body>
+
+	<div>Zahl: <span id="zahl">...</span></div>
+
+</body>
+</html>

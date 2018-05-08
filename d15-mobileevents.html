@@ -1,0 +1,59 @@
+<!doctype html>
+<html>
+<head>
+	<title></title>
+	<meta charset="utf-8">
+	<script src="jquery-3.3.1.min.js"></script>
+	<script>
+var bilder = [
+	'das-paradies-fuer-wintersportler.jpg',
+	'open-faces-freeride-series-in-kappl.jpg',
+	'schloss-matzen-skigebiet.jpg'
+];
+
+var aktuell = 0;
+
+$( document ).ready( function() {
+
+	$( '#bilder' ).append(
+			$('<img>').attr( 'src', 'tirolbilder/'+bilder[0] )
+ 	);
+
+	var startX;
+	$( '#bilder' ).on( 'touchstart', function( event ) {
+		// ermittle Position vom Finger
+		startX = event.originalEvent.touches[0].clientX;
+	});
+	$( '#bilder' ).on( 'touchend', function( event ) {
+		// berechne ob Finger nach links oder rechts bewegt wurde
+		var endX = event.originalEvent.changedTouches[0].clientX;
+		if ( endX - startX < 0 ) $(this).trigger( 'wischlinks' );
+		else	if ( endX - startX > 0 )  $(this).trigger( 'wischrechts' );
+	});
+
+	$('#bilder').on( 'wischlinks', function() {
+		aktuell++;
+		if ( aktuell >= bilder.length ) aktuell = 0;
+		$( 'img', this ).attr( 'src', 'tirolbilder/'+bilder[ aktuell ] );
+	});
+	$('#bilder').on( 'wischrechts', function() {
+		aktuell--;
+		if ( aktuell < 0 ) aktuell = bilder.length - 1;
+		$( 'img', this ).attr( 'src', 'tirolbilder/'+bilder[ aktuell ] );
+	});
+});
+
+	</script>
+	<style>
+	img { vertical-align:bottom; }
+	#bilder { border:1px solid #000; display:inline-block; }
+	#bilder img  { width:400px; height:300px; }
+
+	</style>
+</head>
+<body>
+
+	<div id="bilder"></div>
+
+</body>
+</html>

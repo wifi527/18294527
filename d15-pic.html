@@ -1,0 +1,87 @@
+<!doctype html>
+<html>
+<head>
+	<title></title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width">
+	<script src="jquery-3.3.1.min.js"></script>
+	<script>
+var Swiper = function( bilder ) {
+	this.index = 0;
+	this.bilder = bilder;
+}
+Object.defineProperty( Swiper.prototype, 'pic', {
+	get:function(){
+		return this.index;
+	},
+	set:function(i){
+		if ( i < 0 ) { i = this.bilder.length - 1; }
+		if ( i >= this.bilder.length ) { i = 0; }
+		this.index = i;
+	}
+});
+
+var swipe = new Swiper([
+	'das-paradies-fuer-wintersportler.jpg',
+	'open-faces-freeride-series-in-kappl.jpg',
+	'schloss-matzen-skigebiet.jpg'
+]);
+
+
+$( document ).ready( function() {
+
+	$( '#bilder' ).append(
+			$('<img>').attr( 'src', 'tirolbilder/'+swipe.bilder[0] )
+ 	);
+
+	var startX;
+	$( '#bilder' ).on( 'touchstart', function( event ) {
+		// ermittle Position vom Finger
+		startX = event.originalEvent.touches[0].clientX;
+	});
+	$( '#bilder' ).on( 'touchend', function( event ) {
+		// berechne ob Finger nach links oder rechts bewegt wurde
+		var endX = event.originalEvent.changedTouches[0].clientX;
+		if ( endX - startX < 0 ) $(this).trigger( 'wischlinks' );
+		else	if ( endX - startX > 0 )  $(this).trigger( 'wischrechts' );
+	});
+
+	$('#bilder').on( 'wischlinks', function() {
+		swipe.pic++;
+		$( 'img', this ).attr( 'src', 'tirolbilder/'+swipe.bilder[ swipe.pic ] );
+	});
+	$('#bilder').on( 'wischrechts', function() {
+		swipe.pic--;
+		$( 'img', this ).attr( 'src', 'tirolbilder/'+swipe.bilder[ swipe.pic ] );
+	});
+
+
+
+	function handleMotionEvent(event) {
+	    var y = event.accelerationIncludingGravity.y;
+	    var z = event.accelerationIncludingGravity.z;
+			if ( z > 9 && y > 9 ) {
+					swipe.pic = Math.floor( Math.random() * 3 );
+					$( '#bilder img' ).attr( 'src', 'tirolbilder/'+swipe.bilder[ swipe.pic ] );
+			}
+	}
+
+	window.addEventListener("devicemotion", handleMotionEvent, true);
+
+
+});
+
+	</script>
+	<style>
+	img { vertical-align:bottom; }
+	#bilder { border:1px solid #000; display:inline-block; }
+	#bilder img  { width:300px; height:270px; }
+
+	</style>
+</head>
+<body>
+
+	<div id="bilder"></div>
+
+</body>
+</html>

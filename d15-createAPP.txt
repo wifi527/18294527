@@ -1,0 +1,8 @@
+1) neues Repository bei github.com anlegen
+2) Clone Repository mit GithubDesktop in lokalen (leeren!) Ordner
+3) optional: Add Project Folder (Atom Editor)
+4) config.xml und www/index.html anlegen
+5) PhoneGap Desktop existing Project anlegen
+6) .gitignore einrichten
+7) github.com commit/sync
+8) Phonegap Build neue APP mit REPO

@@ -171,3 +171,25 @@ Beispiele/Übungen
 
 Beispiele/Übungen
 - Chat
+
+### TAG 15 (07.05.2018, C513)
+- Software Engineering
+  * Design Pattern
+- Funktionalität
+  * mobile Eventlistener (devicemotion, deviceorientation, touch)
+- API/Framework
+  * Angular
+  * Cordova mit PhoneGap
+
+Beispiele/Übungen
+- MVC Applikationen
+- mobiler BilderSwipe/Shake
+
+
+### TAG 16 (08.05.2018, C513)
+- Wiederholung
+  * Promise
+  * JSON
+
+Beispiele/Übungen
+- Wienerlinien U-Bahnen in GMAP als CordovaAPP (siehe metroViewer Repo)
