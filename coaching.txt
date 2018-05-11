@@ -1,39 +1,43 @@
 11.5 - Coaching 1, Zeitplan (!!!), Projektbeschreibung, Fragen
-   9:00 -  9:40  Thomas
-   9:40 - 10:20  Olivia
+   9:00 -  9:35  Thomas
+   9:35 - 10:10  Olivia
 
-  10:30 - 11:10  Andreas
+  10:20 - 10:55  Carmen
+  10:55 - 11:30  Andreas
 
-  11:20 - 12:00  Stefan
-  12:00 - 12:40  Franz
+  11:40 - 12:15  Stefan
+  12:15 - 12:50  Franz
 
 
 18.5 - Coaching 2, Fragen
-   9:00 -  9:40  Thomas
-   9:40 - 10:20  Olivia
+  9:00 -  9:35  Thomas
+  9:35 - 10:10  Olivia
 
-  10:30 - 11:10  Andreas
+  10:20 - 10:55  Carmen
+  10:55 - 11:30  Andreas
 
-  11:20 - 12:00  Stefan
-  12:00 - 12:40  Franz
+  11:40 - 12:15  Stefan
+  12:15 - 12:50  Franz
 
 
 
 25.5 - Coaching 3, Fragen
-   9:00 -  9:40  Thomas
-   9:40 - 10:20  Olivia
+  9:00 -  9:35  Thomas
+  9:35 - 10:10  Olivia
 
-  10:30 - 11:10  Andreas
+  10:20 - 10:55  Carmen
+  10:55 - 11:30  Andreas
 
-  11:20 - 12:00  Stefan
-  12:00 - 12:40  Franz
+  11:40 - 12:15  Stefan
+  12:15 - 12:50  Franz
 
 
 1.6 - Coaching 4, Fragen, Abgabe Übungen letzter Tag
-   9:00 -  9:40  Thomas
-   9:40 - 10:20  Andreas
+  9:00 -  9:35  Thomas
+  9:35 - 10:10  Andreas
 
-  10:30 - 11:10  Olivia
+  10:20 - 10:55  Olivia
+  10:55 - 11:30  Carmen
 
-  11:20 - 12:00  Stefan
-  12:00 - 12:40  Franz
+  11:40 - 12:15  Stefan
+  12:15 - 12:50  Franz
